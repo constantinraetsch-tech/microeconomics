@@ -19,7 +19,7 @@ Use your own copies of the papers (October 2023, October 2025 with solutions). T
 | 5 | Qd = 600 − 4p, Qs = 100 + 6p + max price €20 | p 50, Q 400, CS 20,000, PS 12,500; Qs 220, Qd 520, CS 22,550 | 20 |
 | 6 | Minimum wage (UK report) | Inelastic labour demand → less job destruction; diagram with CS/PS | 15 |
 
-## October 2025 (with solutions)
+## October 2025 – Law School (GEL) version
 
 | Q | Topic | Key answer | Marks |
 |---|---|---|---|
@@ -32,3 +32,19 @@ Use your own copies of the papers (October 2023, October 2025 with solutions). T
 | 3.2b | Price +10% → revenue −2% | ε ≈ −1.09 | 10 |
 | 4 | Minimum wage welfare + elasticities | Diagram with new CS/PS; elasticities ↑ → job destruction & unemployment ↑ | 10 |
 | 5 | Qd = 500 − 2p, Qs = −50 + 3p | p 110, Q 280, CS 19,600, PS 13,066.7 | 10 |
+
+## October 2025 – BBA (last year's paper, with solutions)
+
+| Q | Topic | Key answer | Marks |
+|---|---|---|---|
+| 1a | London hotels: PED −0.15, £250 → £425, 200 rooms | %ΔP +70%, %ΔQ −10.5%, Q 179, revenue £50,000 → £76,075 (+£26,075) | 10 |
+| 1b | Oasis concerts + hotel closures | D↑ S↓ → P↑, Q uncertain | 10 |
+| 2.1 | Define OC; two factors raising OC of buying a flat | Interest rates ↑, rents ↓, nearby house prices ↓ | 10 |
+| 2.2 | France & Germany: solar panels / wind turbines | France turbines (OC 2 panels), Germany panels; max 2,400 panels / 750 turbines; kink (300, 1,800); slopes −2, −4 | 15 |
+| 3a | Qd = 2,000 − 2p, Qs = 200 + 3p | p 360, Q 1,280, CS 409,600, PS 266,400 | 11 |
+| 3b | PED and PES at equilibrium | −0.56 and 0.84 | 9 |
+| 4.1 | Marginal analysis: MPL ↑, wage ↑ | Employment ↑, employment ↓ | 5 |
+| 4.2 | XED = −1.5 | Complements | 5 |
+| 4.3 | Revenue, price ↓, elastic demand | Revenue ↑ (diagram) | 5 |
+| 5a | Minimum wage welfare diagram | Firms' CS ↓, workers gain rectangle, lose job-destruction triangle | 15 |
+| 5b | w 2, L 2,000, ε_D −2, ε_S 1.5, min wage 2.5 | Ld 1,000, Ls 2,750, unemployment 1,750 | 15 |

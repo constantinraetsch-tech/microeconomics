@@ -232,3 +232,70 @@ Price from demand: 80 = 200 − 2p → **p = 60**. Supply price at 80 = 26.67. P
 
 ![diagram](../diagrams/production-quota.png)
 
+
+
+## Midterm Oct 2025 (BBA) – with solutions
+
+**Q:** London luxury hotels: PED = −0.15, £250 a night, 200 rooms. Manager raises the price to £425. Change in daily revenue? (Midterm 2025, 10 marks) ⭐
+
+%ΔP = **+70%** → %ΔQ = −0.15 × 70 = **−10.5%** → Q ≈ **179** rooms. Revenue £50,000 → £425 × 179 = **£76,075** (+**£26,075**).
+
+> Marks: 2 for %ΔP, 3 for using the PED formula, 3 for the new Q, 2 for the change in revenue.
+
+
+**Q:** Oasis plays in London (more hotel demand) while inspections temporarily close some hotels. New equilibrium? (Midterm 2025) ⭐
+
+Demand **↑** (P↑ Q↑) + supply **↓** (P↑ Q↓) → **P ↑**, **Q uncertain**.
+
+> Marks: 1 change in D, 1 change in S, 2 final effect on Q, 1 final effect on P. Draw S shifting left and D shifting right.
+
+
+**Q:** Define opportunity cost and give two factors that **increase** the opportunity cost of **buying a flat**. (Midterm 2025) ⭐
+
+OC = value of the next-best alternative given up. Factors: **interest rates ↑** (money could earn more elsewhere / borrowing dearer), **rents ↓** (renting becomes the cheaper alternative), **house prices in nearby cities ↓**.
+
+> Marks: 2 for the definition, 3 for each correct factor.
+
+
+**Q:** France: 100 resources × (6 solar panels or 3 turbines). Germany: 150 × (12 panels or 3 turbines). Comparative advantage? Joint PPC (panels vertical)? (Midterm 2025, 15 marks) ⭐
+
+OC(turbine): France **2 panels**, Germany **4 panels** → **France: turbines**; **Germany: panels** (0.25 vs 0.5 turbines/panel). Max **2,400 panels**, **750 turbines**; kink at **(300 turbines, 1,800 panels)**; slopes **−2** then **−4**.
+
+> Marks: 3 opportunity cost, 3 comparative advantage, 9 joint PPC. France (lowest OC of turbines) makes turbines first: gives up 600 panels for 300 turbines.
+
+
+**Q:** Qd = 2,000 − 2p, Qs = 200 + 3p. Equilibrium and welfare? (Midterm 2025) ⭐
+
+**p = 360, Q = 1,280**. Demand intercept p = 1,000. CS = ½(1,000 − 360)(1,280) = **409,600**. Supply starts at Q = 200 → PS trapezoid ½(200 + 1,280)(360) = **266,400**.
+
+
+**Q:** Same market (Qd = 2,000 − 2p, Qs = 200 + 3p): price elasticity of demand and of supply at equilibrium? ⭐
+
+Point formula: ε_D = −2 × 360/1,280 = **−0.5625** (inelastic); ε_S = 3 × 360/1,280 = **0.84**.
+
+
+**Q:** Marginal analysis: how does employment change if (I) the **marginal product of labour** rises, (II) the **hourly wage** rises? (Midterm 2025) ⭐
+
+(I) MPL ↑ → each worker adds more → **employment ↑**. (II) Wage ↑ → **employment ↓** (law of demand for labour).
+
+> Firms hire until the value of the marginal product of labour = wage. Higher MPL raises what a worker is worth; a higher wage raises what a worker costs.
+
+
+**Q:** Cross-price elasticity = −1.5. Complements or substitutes? (Midterm 2025) ⭐
+
+**Complements** – the price of one ↑ → quantity of the other ↓ (negative XED).
+
+
+**Q:** Minimum wage diagram: which areas change for workers and firms? (Midterm 2025, 15 marks) ⭐
+
+Firms' surplus (CS) shrinks to the small triangle **above w_min**. Workers gain the rectangle **(w_min − w_e) × Ld** but lose the triangle from **job destruction** (Ld → Le). Marks: min wage 2, new Ld & Ls 3, CS 5, PS 5.
+
+![diagram](../diagrams/minimum-wage.png)
+
+
+**Q:** Labour market: w = 2, L = 2,000, ε_D = −2, ε_S = 1.5. Minimum wage 2.5. Expected unemployment? (Midterm 2025, 15 marks) ⭐
+
+%Δw = **+25%**. Ld: −2 × 25% = −50% → **1,000**. Ls: 1.5 × 25% = +37.5% → **2,750**. Unemployment = 2,750 − 1,000 = **1,750**.
+
+> Marks: 3 change in wage, 5 use of both elasticities, 4 new Ls and Ld, 3 unemployment.
+

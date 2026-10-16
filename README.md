@@ -2,19 +2,19 @@
 
 ESADE BBA · Microeconomics · Topics 1–3 · **Midterm: Monday 19 October 2026**
 
-📖 **Study page (website):** https://constantinraetsch-tech.github.io/microeconomics/
+📱 **Study app (website):** https://constantinraetsch-tech.github.io/microeconomics/
 
 ## Where everything is
 
 | Folder / file | What's inside | When to use it |
 |---|---|---|
-| [`recall-decks/`](recall-decks) | 5 zip decks for RECALL (174 cards) | Every day – import into RECALL |
+| [`recall-decks/`](recall-decks) | 5 zip decks for RECALL (184 cards) | Every day – import into RECALL |
 | [`notes/`](notes) | All flashcards as readable notes, one file per topic | Reading / quick review |
 | [`formulas.md`](formulas.md) | Formula sheet for all three topics | Before every practice question, Monday morning |
 | [`practice/`](practice) | Worked calculations, Seminar 3 solutions, mock exam, past-midterm map | Saturday & Sunday |
 | [`videos.md`](videos.md) | 25 explainer videos sorted by topic | When a concept doesn't click |
 | [`diagrams/`](diagrams) | 9 exam diagrams (ceiling, floor, quota, min wage, shifts, PPF…) | Practise drawing them |
-| [`index.html`](index.html) | The study page (same as the website) | Everything in one place |
+| [`index.html`](index.html) | **The study app**: plan checklist, lessons, flashcards, practice exams, formulas, videos | Everything in one place – open the website |
 | [`scripts/`](scripts) | Python that builds the decks and diagrams | Only if you want to change cards |
 
 ## Topics
@@ -27,11 +27,11 @@ ESADE BBA · Microeconomics · Topics 1–3 · **Midterm: Monday 19 October 2026
 
 | Zip | Cards |
 |---|---|
-| `Micro_Midterm_ALL.zip` | 174 (everything) |
+| `Micro_Midterm_ALL.zip` | 184 (everything) |
 | `Micro_T1_Introduction.zip` | 56 |
 | `Micro_T2_Market_Analysis.zip` | 49 |
 | `Micro_T3_Market_Interventions.zip` | 29 |
-| `Micro_Exam_Practice.zip` | 40 calculations |
+| `Micro_Exam_Practice.zip` | 50 calculations |
 
 Import either the ALL zip or the four topic zips – the card ids are the same, so importing both doesn't duplicate anything. Tags: `midterm` (all cards, gives the exam section), `past-exam`, `calc`, `diagram`.
 
