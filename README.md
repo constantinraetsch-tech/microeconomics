@@ -10,7 +10,7 @@ ESADE BBA · Microeconomics · Topics 1–3 · **Midterm: Monday 19 October 2026
 |---|---|---|
 | [`recall-decks/`](recall-decks) | 5 zip decks for RECALL (184 cards) | Every day – import into RECALL |
 | [`notes/`](notes) | All flashcards as readable notes, one file per topic | Reading / quick review |
-| [`formulas.md`](formulas.md) | Formula sheet for all three topics | Before every practice question, Monday morning |
+| [`formula-sheet.pdf`](formula-sheet.pdf) / [`formulas.md`](formulas.md) | Formula sheet (printable PDF with proper fractions) | Before every practice question, Monday morning |
 | [`practice/`](practice) | Worked calculations, Seminar 3 solutions, mock exam, past-midterm map | Saturday & Sunday |
 | [`videos.md`](videos.md) | 25 explainer videos sorted by topic | When a concept doesn't click |
 | [`diagrams/`](diagrams) | 9 exam diagrams (ceiling, floor, quota, min wage, shifts, PPF…) | Practise drawing them |

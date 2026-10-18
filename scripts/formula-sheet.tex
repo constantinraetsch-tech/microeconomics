@@ -1,0 +1,287 @@
+\documentclass[10pt]{article}
+\usepackage[a4paper,margin=1.4cm]{geometry}
+\usepackage[T1]{fontenc}
+
+\usepackage{amsmath,amssymb}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{multicol}
+\usepackage{array,booktabs}
+\usepackage{enumitem}
+\setlist{nosep,leftmargin=1.3em}
+\setlength{\parindent}{0pt}
+\pagestyle{empty}
+
+\definecolor{t1}{HTML}{2F6BFF}
+\definecolor{t2}{HTML}{FF5A47}
+\definecolor{t3}{HTML}{0FB58C}
+\definecolor{ex}{HTML}{6B7280}
+
+\newtcolorbox{fbx}[2]{enhanced,colback=white,colframe=#1,boxrule=0.8pt,arc=2mm,
+  left=2mm,right=2mm,top=1mm,bottom=1.2mm,
+  title={\bfseries #2},fonttitle=\small,coltitle=white,colbacktitle=#1,
+  attach boxed title to top left={xshift=2mm,yshift=-2mm},top=3mm,
+  boxed title style={arc=1mm,boxrule=0pt},before skip=3.5mm,after skip=1mm}
+
+\newcommand{\eg}[1]{\par\smallskip{\color{ex}\small\textit{Example:} #1}}
+\newcommand{\topic}[2]{\par\medskip{\color{#1}\Large\bfseries #2}\par\vspace{-1mm}{\color{#1}\rule{\linewidth}{1.2pt}}\par}
+
+\begin{document}
+
+{\LARGE\bfseries Microeconomics Midterm -- Formula Sheet}\hfill{\small ESADE BBA 26/27 · Topics 1--3}\par
+\vspace{1mm}{\small Percentages always use the \textbf{starting} (old) value. \quad $\Delta$ means ``change in'' = new $-$ old.}
+
+%=====================================================================
+\topic{t1}{Topic 1 · Introduction to Economics}
+
+\par\noindent\begin{minipage}[t]{0.49\linewidth}\vspace{0pt}
+\begin{fbx}{t1}{Opportunity cost}
+The value of the \textbf{next-best alternative} given up when you make a decision.
+\eg{Taxi job: lost salary 37{,}000 + lost interest $4\%\times100{,}000$ = 41{,}000.}
+\end{fbx}
+\end{minipage}\hfill\begin{minipage}[t]{0.49\linewidth}\vspace{0pt}
+\begin{fbx}{t1}{Opportunity cost from a PPF}
+\[
+\text{OC of 1 unit of }X=\frac{\text{max. units of }Y}{\text{max. units of }X}
+\]
+\[
+\text{OC of 1 unit of }Y=\frac{1}{\text{OC of }X}
+\]
+The OC is the slope of the PPF (ignore the minus sign).
+\eg{France: 6 panels or 3 turbines $\Rightarrow$ OC(turbine) $=\dfrac{6}{3}=2$ panels.}
+\end{fbx}
+\end{minipage}\par
+
+
+\begin{fbx}{t1}{PPF from time / resources}
+\[
+a\cdot X+b\cdot Y=\text{Total}
+\quad\Longrightarrow\quad
+Y=\frac{\text{Total}}{b}-\frac{a}{b}\,X
+\]
+\eg{HAL26: $3M+12P=120 \;\Rightarrow\; P=\dfrac{120}{12}-\dfrac{3}{12}M=10-0.25\,M$}
+\end{fbx}
+
+\par\noindent\begin{minipage}[t]{0.49\linewidth}\vspace{0pt}
+\begin{fbx}{t1}{Comparative advantage \& joint PPF}
+\begin{itemize}
+\item Comparative advantage = the \textbf{lower} opportunity cost.
+\item Trade price lies \textbf{between} the two OCs.
+\item Joint PPF: start at max.\ of the vertical good. The producer with the \textbf{lowest OC of the horizontal good} switches first $\Rightarrow$ \textbf{kink}. Then the other one.
+\end{itemize}
+\eg{France/Germany: kink at (300 turbines, 1{,}800 panels), slopes $-2$ then $-4$.}
+\end{fbx}
+\end{minipage}\hfill\begin{minipage}[t]{0.49\linewidth}\vspace{0pt}
+\begin{fbx}{t1}{HHI (market concentration)}
+\[
+\text{HHI}=s_1^{\,2}+s_2^{\,2}+s_3^{\,2}+\dots
+\qquad(s = \text{share in \%})
+\]
+\[
+\text{Minimum with } n \text{ firms}=\frac{10{,}000}{n}
+\]
+Range: close to 0 $\;\to\;$ 10{,}000 (monopoly).
+\eg{$80^2+15^2+5^2=6{,}650$; \;3 firms: $\dfrac{10{,}000}{3}=3{,}333$}
+\end{fbx}
+\end{minipage}\par
+
+
+%=====================================================================
+\topic{t2}{Topic 2 · Market Analysis}
+
+\par\noindent\begin{minipage}[t]{0.49\linewidth}\vspace{0pt}
+\begin{fbx}{t2}{Equilibrium}
+Set demand = supply:\quad $Q_d=Q_s$
+\begin{enumerate}[label=\arabic*.]
+\item Solve for $p^*$.
+\item Put $p^*$ into \textbf{both} equations $\Rightarrow Q^*$ (check!).
+\end{enumerate}
+\eg{$2000-2p=200+3p \Rightarrow p^*=\dfrac{1800}{5}=360,\; Q^*=1280$}
+\end{fbx}
+\end{minipage}\hfill\begin{minipage}[t]{0.49\linewidth}\vspace{0pt}
+\begin{fbx}{t2}{Percentage change}
+\[
+\%\Delta=\frac{\text{new}-\text{old}}{\text{old}}\times100
+\]
+\[
+\text{new value}=\text{old}\times\left(1+\frac{\%\Delta}{100}\right)
+\]
+\eg{$\dfrac{425-250}{250}\times100=+70\%$;\; $200\times(1-0.105)=179$}
+\end{fbx}
+\end{minipage}\par
+
+
+\begin{fbx}{t2}{Price elasticity of demand (PED)}
+\[
+\varepsilon_D=\frac{\%\Delta Q}{\%\Delta P}
+=\frac{\dfrac{\Delta Q}{Q_0}}{\dfrac{\Delta P}{P_0}}
+=\frac{\Delta Q}{\Delta P}\cdot\frac{P_0}{Q_0}
+\qquad\qquad
+\text{at a point: }\;\varepsilon_D=\text{slope}\times\frac{p}{Q}
+\]
+\[
+\text{Rearranged:}\qquad \%\Delta Q=\varepsilon_D\times\%\Delta P
+\qquad\qquad
+\%\Delta P=\frac{\%\Delta Q}{\varepsilon_D}
+\]
+\eg{$\varepsilon=-0.15$, $\%\Delta P=+70\% \Rightarrow \%\Delta Q=-0.15\times70=-10.5\%$.\quad Point: $\varepsilon=-2\times\dfrac{360}{1280}=-0.56$}
+\end{fbx}
+
+\par\noindent\begin{minipage}[t]{0.49\linewidth}\vspace{0pt}
+\begin{fbx}{t2}{Elasticity ranges (use $|\varepsilon|$, no minus)}
+\begin{tabular}{@{}ll@{}}
+$|\varepsilon|=0$ & perfectly inelastic (vertical)\\
+$0<|\varepsilon|<1$ & inelastic\\
+$|\varepsilon|=1$ & unit elastic\\
+$|\varepsilon|>1$ & elastic\\
+$|\varepsilon|=\infty$ & perfectly elastic (horizontal)
+\end{tabular}
+\end{fbx}
+\end{minipage}\hfill\begin{minipage}[t]{0.49\linewidth}\vspace{0pt}
+\begin{fbx}{t2}{Revenue}
+\[
+R=P\times Q
+\qquad\quad
+\frac{R_1}{R_0}=\left(1+\frac{\%\Delta P}{100}\right)\left(1+\frac{\%\Delta Q}{100}\right)
+\]
+\begin{tabular}{@{}lll@{}}
+ & Price $\uparrow$ & Price $\downarrow$\\\midrule
+Inelastic & $R\uparrow$ & $R\downarrow$\\
+Elastic & $R\downarrow$ & $R\uparrow$
+\end{tabular}
+\eg{$+10\%$ price, $-2\%$ revenue: $\dfrac{0.98}{1.10}=0.891\Rightarrow \%\Delta Q=-10.9\%$}
+\end{fbx}
+\end{minipage}\par
+
+
+\par\noindent\begin{minipage}[t]{0.49\linewidth}\vspace{0pt}
+\begin{fbx}{t2}{Linear demand $Q=a-b\,p$}
+\[
+\varepsilon_D=\frac{-b\,p}{a-b\,p}
+\qquad\quad
+p_{\text{max revenue}}=\frac{a}{2b}\;\;(\varepsilon=-1)
+\]
+\eg{$Q=500-5p \Rightarrow p=\dfrac{500}{2\times5}=50$}
+\end{fbx}
+\end{minipage}\hfill\begin{minipage}[t]{0.49\linewidth}\vspace{0pt}
+\begin{fbx}{t2}{Other elasticities}
+\[
+\varepsilon_{XY}=\frac{\%\Delta Q_X}{\%\Delta P_Y}
+\quad
+\varepsilon_I=\frac{\%\Delta Q}{\%\Delta\,\text{Income}}
+\quad
+\varepsilon_S=\frac{\%\Delta Q_s}{\%\Delta P}
+\]
+Cross: $+$ substitutes, $-$ complements.\\
+Income: $>1$ luxury, $0$--$1$ necessity, $<0$ inferior.
+\end{fbx}
+\end{minipage}\par
+
+
+\begin{fbx}{t2}{Two effects at once}
+\[
+\%\Delta Q_X=\varepsilon_{\text{own}}\times\%\Delta P_X\;+\;\varepsilon_{\text{cross}}\times\%\Delta P_Y
+\]
+\eg{Norway EVs: $-0.97\times20\%+0.36\times(-10\%)=-19.4\%-3.6\%=-23\%$}
+\end{fbx}
+
+\par\noindent\begin{minipage}[t]{0.49\linewidth}\vspace{0pt}
+\begin{fbx}{t2}{Consumer surplus (CS)}
+\[
+\text{CS}=\tfrac12\times\bigl(p_{\text{max}}-p^*\bigr)\times Q^*
+\]
+$p_{\text{max}}$ = price where demand hits the price axis (set $Q=0$).\\
+Table: CS $=$ sum of (WTP $-$ price) for units bought.
+\eg{$\tfrac12(1000-360)\times1280=409{,}600$}
+\end{fbx}
+\end{minipage}\hfill\begin{minipage}[t]{0.49\linewidth}\vspace{0pt}
+\begin{fbx}{t2}{Producer surplus (PS)}
+Supply starts on the price axis (triangle):
+\[
+\text{PS}=\tfrac12\times\bigl(p^*-p_{\text{min}}\bigr)\times Q^*
+\]
+Supply starts on the quantity axis (trapezoid):
+\[
+\text{PS}=\frac{Q_s(0)+Q^*}{2}\times p^*
+\]
+\eg{$\dfrac{200+1280}{2}\times360=266{,}400$}
+\end{fbx}
+\end{minipage}\par
+
+
+\par\noindent\begin{minipage}[t]{0.49\linewidth}\vspace{0pt}
+\begin{fbx}{t2}{Costs}
+\[
+\text{MC}=\Delta\,\text{TVC}\qquad \text{PS}=\text{Revenue}-\text{Variable costs}
+\]
+\[
+\text{Profit}=\text{PS}-\text{Fixed costs}
+\]
+Firm makes a unit if $P\ge \text{MC}$. Fixed costs don't affect supply.
+\end{fbx}
+\end{minipage}\hfill\begin{minipage}[t]{0.49\linewidth}\vspace{0pt}
+\begin{fbx}{t2}{Shifts}
+\begin{tabular}{@{}ll@{}}
+D$\uparrow$ S$\uparrow$ & $Q\uparrow$, $P$ ?\\
+D$\uparrow$ S$\downarrow$ & $P\uparrow$, $Q$ ?\\
+D$\downarrow$ S$\uparrow$ & $P\downarrow$, $Q$ ?\\
+D$\downarrow$ S$\downarrow$ & $Q\downarrow$, $P$ ?
+\end{tabular}
+\par\smallskip
+Market demand: add the quantities of all groups still buying at each price.
+\end{fbx}
+\end{minipage}\par
+
+
+%=====================================================================
+\topic{t3}{Topic 3 · Market Interventions I}
+
+\begin{fbx}{t3}{Price ceiling (maximum price, below $p^*$)}
+Traded quantity $=Q_s$ \;(shortage $=Q_d-Q_s$). \;Find $\text{WTP}$ = price on the demand curve at $Q_s$.
+\[
+\text{CS}=\bigl(\text{WTP}-p_{\max}\bigr)\times Q_s+\tfrac12\bigl(p_{\text{choke}}-\text{WTP}\bigr)\times Q_s
+\qquad
+\text{DWL}=\tfrac12\bigl(\text{WTP}-p_{\max}\bigr)\times\bigl(Q^*-Q_s\bigr)
+\]
+\eg{$Q_d=600-4p$, $Q_s=100+6p$, ceiling 20: $Q_s=220$, WTP $=\dfrac{600-220}{4}=95$, CS $=\dfrac{(150-20)+(95-20)}{2}\times220=22{,}550$}
+\end{fbx}
+
+\par\noindent\begin{minipage}[t]{0.49\linewidth}\vspace{0pt}
+\begin{fbx}{t3}{Price floor / quota}
+Floor (above $p^*$): traded quantity $=Q_d$, surplus $=Q_s-Q_d$.\\
+Quota: price read from the \textbf{demand} curve at the quota.
+\[
+\text{PS}=\bigl(p-c\bigr)\times Q+\tfrac12\,c\times Q
+\]
+($c$ = supply price at that $Q$)
+\eg{Apples, quota 80: $p=60$, $c=26.7$, PS $=3{,}733$}
+\end{fbx}
+\end{minipage}\hfill\begin{minipage}[t]{0.49\linewidth}\vspace{0pt}
+\begin{fbx}{t3}{Minimum wage}
+\[
+\text{Job destruction}=L_e-L_d
+\qquad
+\text{Unemployment}=L_s-L_d
+\]
+With elasticities:
+\[
+\%\Delta L_d=\varepsilon_D\times\%\Delta w
+\qquad
+\%\Delta L_s=\varepsilon_S\times\%\Delta w
+\]
+\eg{$+25\%$: $L_d=2000\times0.5=1000$, $L_s=2000\times1.375=2750$, unemployment $=1750$}
+\end{fbx}
+\end{minipage}\par
+
+
+\begin{fbx}{t3}{Externalities}
+\[
+\text{Social cost}=\text{Private cost}+\text{External cost}
+\qquad
+\text{Social benefit}=\text{Private benefit}+\text{External benefit}
+\]
+Efficient if social benefit $\ge$ social cost. \;Negative externality $\Rightarrow$ too much (tax). \;Positive $\Rightarrow$ too little (subsidy).
+\eg{Roger: $100+30=130>120$ $\Rightarrow$ should attend. \;Battery: private gain $1<$ external cost $2$ $\Rightarrow$ shouldn't happen.}
+\end{fbx}
+
+\end{document}
