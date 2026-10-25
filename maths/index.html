@@ -1,0 +1,820 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Calculus Unit 2 Trainer</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+  svg: { fontCache: 'global' },
+  options: { enableMenu: false },
+  startup: { typeset: false }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js"></script>
+<style>
+/* Layout: graph-paper notebook. Sticky tab strip, one centred column (max 820px), cards only for things you interact with. */
+/* Bright single theme by choice: always light, white paper, vivid ink. */
+:root {
+  --paper: #ffffff;
+  --grid: rgba(0, 120, 255, 0.08);
+  --surface: #ffffff;
+  --ink: #101a3d;
+  --ink-soft: #4b5677;
+  --line: #d6e2ff;
+  --pen: #0a5cff;
+  --pen-soft: #e6f0ff;
+  --mark: #ffe14d;
+  --mark-ink: #101a3d;
+  --pop: #ff4f9a;
+  --pop2: #00c2a8;
+  --good: #0f9d58;
+  --good-soft: #dcf7e8;
+  --warn: #c76a00;
+  --warn-soft: #fff1d6;
+  --bad: #e5322d;
+  --bad-soft: #ffe3e1;
+  --f-display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", sans-serif;
+  --f-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  color-scheme: light;
+}
+header.top { background: linear-gradient(120deg, #e6f0ff 0%, #fff6c9 55%, #ffe3f0 100%); border-bottom: 3px solid var(--pen); }
+.top-inner { padding-block: 28px 20px; }
+header.top h1 { color: var(--pen); }
+.card { border-width: 2px; }
+.card:nth-child(4n+1) { border-top: 4px solid var(--pen); }
+.card:nth-child(4n+2) { border-top: 4px solid var(--pop); }
+.card:nth-child(4n+3) { border-top: 4px solid var(--pop2); }
+.card:nth-child(4n+4) { border-top: 4px solid var(--mark); }
+.method div:nth-child(3n+1) { background: var(--pen-soft); }
+.method div:nth-child(3n+2) { background: #fff6c9; }
+.method div:nth-child(3n+3) { background: #ffe3f0; }
+.score { color: var(--pop); }
+* { box-sizing: border-box; }
+body {
+  background-color: var(--paper);
+  background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 24px 24px;
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-size: 16px;
+  line-height: 1.6;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--surface); }
+.wrap { max-width: 820px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
+h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; line-height: 1.15; margin: 0; }
+h1 { font-size: clamp(30px, 6vw, 46px); font-weight: 800; letter-spacing: -0.02em; }
+h2 { font-size: 26px; font-weight: 700; letter-spacing: -0.01em; }
+h3 { font-size: 18px; font-weight: 700; }
+.hl { background: linear-gradient(transparent 55%, var(--mark) 55%); color: inherit; padding: 0 2px; }
+.countdown { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: baseline; margin-top: 10px; color: var(--ink-soft); }
+.countdown b { font-family: var(--f-mono); color: var(--pen); font-size: 20px; }
+
+nav.tabs { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--surface); border-bottom: 1px solid var(--line); }
+nav.tabs .wrap { display: flex; gap: 4px; overflow-x: auto; padding-block: 8px; scrollbar-width: none; }
+nav.tabs button { flex: 0 0 auto; font: 600 14px var(--f-body); color: var(--ink-soft); background: none; border: 1px solid transparent; border-radius: 999px; padding: 6px 12px; cursor: pointer; }
+nav.tabs button:hover { color: var(--ink); border-color: var(--line); }
+nav.tabs button[aria-selected="true"] { background: var(--pen); color: var(--surface); }
+nav.tabs .pct { font-family: var(--f-mono); font-size: 11px; opacity: .8; margin-left: 4px; }
+
+main { padding-block: 26px 80px; }
+section.view { display: flex; flex-direction: column; gap: 28px; }
+.block { display: flex; flex-direction: column; gap: 12px; }
+.lede { color: var(--ink-soft); max-width: 65ch; margin: 0; }
+p { margin: 0; }
+.steplabel { font-family: var(--f-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--pen); }
+
+button.btn { font: 600 14px var(--f-body); border-radius: 8px; padding: 8px 14px; cursor: pointer; border: 1px solid var(--line); background: var(--surface); color: var(--ink); }
+button.btn:hover { border-color: var(--pen); }
+button.btn.primary { background: var(--pen); color: var(--surface); border-color: var(--pen); }
+button:focus-visible, input:focus-visible { outline: 3px solid var(--mark); outline-offset: 2px; }
+.row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+
+/* method list */
+.method { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+.method div { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; min-width: 0; }
+.method h3 { font-size: 16px; margin-bottom: 4px; }
+.method p { color: var(--ink-soft); font-size: 15px; }
+.plan { display: flex; flex-direction: column; border-top: 1px solid var(--line); }
+.plan > div { display: grid; grid-template-columns: 120px 1fr; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.plan .day { font-family: var(--f-display); font-weight: 700; }
+.plan .day small { display: block; font-family: var(--f-mono); font-weight: 500; font-size: 12px; color: var(--ink-soft); }
+.plan ul { margin: 0; padding-left: 18px; }
+@media (max-width: 520px) { .plan > div { grid-template-columns: 1fr; gap: 2px; } }
+
+/* recall cards */
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 10px; }
+.card { text-align: left; font: inherit; color: inherit; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px; cursor: pointer; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
+.card .q { font-weight: 600; }
+.card .a { display: none; border-top: 1px dashed var(--line); padding-top: 8px; font-size: 15px; overflow-x: auto; }
+.card .tap { font-size: 12px; color: var(--ink-soft); font-family: var(--f-mono); }
+.card.open .a { display: block; }
+.card.open .tap { display: none; }
+.card.open { border-color: var(--pen); }
+
+/* worked + problems */
+.prob { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.prob[data-r="got"] { border-left: 4px solid var(--good); }
+.prob[data-r="shaky"] { border-left: 4px solid var(--warn); }
+.prob[data-r="missed"] { border-left: 4px solid var(--bad); }
+.prob .head { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+.prob .src { font-family: var(--f-mono); font-size: 12px; color: var(--ink-soft); }
+.prob .qtext { overflow-x: auto; }
+.steps { display: flex; flex-direction: column; gap: 8px; margin: 0; padding: 0; list-style: none; counter-reset: s; }
+.steps li { counter-increment: s; background: var(--pen-soft); border-radius: 8px; padding: 10px 12px 10px 40px; position: relative; overflow-x: auto; }
+.steps li::before { content: counter(s); position: absolute; left: 12px; top: 10px; font-family: var(--f-mono); font-size: 13px; color: var(--pen); font-weight: 500; }
+.final { background: var(--good-soft); border-radius: 8px; padding: 10px 12px; overflow-x: auto; }
+.final b { color: var(--good); }
+.check { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.check input { font: 500 15px var(--f-mono); width: 140px; padding: 7px 10px; border-radius: 8px; border: 1px solid var(--line); background: var(--paper); color: var(--ink); }
+.fb { font-size: 14px; font-weight: 600; }
+.fb.ok { color: var(--good); } .fb.no { color: var(--bad); }
+.rate { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: 14px; color: var(--ink-soft); }
+.rate button { font: 600 13px var(--f-body); border-radius: 999px; padding: 5px 12px; cursor: pointer; border: 1px solid var(--line); background: var(--surface); color: var(--ink); }
+.rate button[data-v="got"][aria-pressed="true"] { background: var(--good-soft); border-color: var(--good); color: var(--good); }
+.rate button[data-v="shaky"][aria-pressed="true"] { background: var(--warn-soft); border-color: var(--warn); color: var(--warn); }
+.rate button[data-v="missed"][aria-pressed="true"] { background: var(--bad-soft); border-color: var(--bad); color: var(--bad); }
+
+.traps { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.traps li { border-left: 3px solid var(--bad); padding: 4px 0 4px 12px; overflow-x: auto; }
+.traps li b { color: var(--bad); }
+
+/* quiz */
+.quizbox { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 14px; }
+.qmeta { display: flex; justify-content: space-between; font-family: var(--f-mono); font-size: 13px; color: var(--ink-soft); }
+.bar { height: 6px; background: var(--pen-soft); border-radius: 3px; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--pen); width: 0; transition: width .3s; }
+.choices { display: grid; gap: 8px; }
+.choices button { text-align: left; font: inherit; color: inherit; background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; cursor: pointer; overflow-x: auto; }
+.choices button:hover:not(:disabled) { border-color: var(--pen); }
+.choices button.right { background: var(--good-soft); border-color: var(--good); }
+.choices button.wrong { background: var(--bad-soft); border-color: var(--bad); }
+.choices button:disabled { cursor: default; }
+.explain { background: var(--pen-soft); border-radius: 8px; padding: 10px 12px; overflow-x: auto; }
+.score { font-family: var(--f-display); font-size: 44px; font-weight: 800; color: var(--pen); }
+.empty { color: var(--ink-soft); background: var(--surface); border: 1px dashed var(--line); border-radius: 12px; padding: 18px; }
+.revitem { display: flex; justify-content: space-between; gap: 10px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; flex-wrap: wrap; }
+.revitem .t { min-width: 0; flex: 1 1 260px; overflow-x: auto; }
+.pill { font-family: var(--f-mono); font-size: 11px; text-transform: uppercase; letter-spacing: .06em; padding: 2px 8px; border-radius: 999px; }
+.pill.missed { background: var(--bad-soft); color: var(--bad); }
+.pill.shaky { background: var(--warn-soft); color: var(--warn); }
+table.mini { border-collapse: collapse; font-size: 14px; width: 100%; }
+table.mini td, table.mini th { border-bottom: 1px solid var(--line); padding: 4px 6px; text-align: left; }
+mjx-container[display="true"] { overflow-x: auto; overflow-y: hidden; max-width: 100%; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+</head>
+<body>
+<header class="top"><div class="wrap top-inner">
+  <div class="eyebrow">Applied Mathematics for Business · Unit 2 · One-variable calculus</div>
+  <h1>Calculus Unit 2 <span class="hl">Trainer</span></h1>
+  <div class="countdown" id="countdown"></div>
+</div></header>
+
+<nav class="tabs" aria-label="Sections"><div class="wrap" id="tabs" role="tablist"></div></nav>
+
+<main class="wrap" id="main"></main>
+
+<script>
+const R = String.raw;
+
+/* ---------------- CONTENT ---------------- */
+const TOPICS = [
+{
+  id: 't21', code: '2.1', name: 'Functions, limits & continuity',
+  exam: 'Domain and range, contextual domain, compositions, income and profit, limits from a graph, one-sided limits, asymptotes, continuity of piecewise functions, classifying discontinuities, finding a parameter that makes f continuous.',
+  cards: [
+    { q: 'What three things shrink a domain?', a: R`No division by zero: \(\dfrac{1}{x}\) needs \(x\neq 0\).<br>No square root of a negative: \(\sqrt{x}\) needs \(x\ge 0\).<br>No log of zero or negatives: \(\ln x\) needs \(x\gt 0\).` },
+    { q: 'Domain and range of the basic functions', a: R`<table class="mini"><tr><th>f</th><th>D(f)</th><th>R(f)</th></tr>
+      <tr><td>\(x^2\)</td><td>\(\mathbb{R}\)</td><td>\([0,+\infty)\)</td></tr>
+      <tr><td>\(\sqrt{x}\)</td><td>\([0,+\infty)\)</td><td>\([0,+\infty)\)</td></tr>
+      <tr><td>\(\dfrac{1}{x}\)</td><td>\(\mathbb{R}\setminus\{0\}\)</td><td>\(\mathbb{R}\setminus\{0\}\)</td></tr>
+      <tr><td>\(e^x\)</td><td>\(\mathbb{R}\)</td><td>\((0,+\infty)\)</td></tr>
+      <tr><td>\(\ln x\)</td><td>\((0,+\infty)\)</td><td>\(\mathbb{R}\)</td></tr>
+      <tr><td>\(|x|\)</td><td>\(\mathbb{R}\)</td><td>\([0,+\infty)\)</td></tr>
+      <tr><td>\(\lfloor x\rfloor\)</td><td>\(\mathbb{R}\)</td><td>\(\mathbb{Z}\)</td></tr></table>` },
+    { q: 'What is the contextual domain?', a: R`The mathematical domain cut down to values that make sense in the problem. Prices and quantities can't be negative, and a price must stay positive. Example: \(p(x)=\dfrac{-0.27x+51}{1000}\gt 0 \Rightarrow D_c=(0,\ 188.89)\).` },
+    { q: R`What does \((f\circ g)(x)\) mean?`, a: R`\((f\circ g)(x)=f\big(g(x)\big)\): apply \(g\) first, then \(f\). Usually \(f\circ g\neq g\circ f\).<br>With \(f=x^2,\ g=x-1\): \(f\circ g=(x-1)^2\), but \(g\circ f=x^2-1\).` },
+    { q: 'Income, profit, break-even', a: R`\(I(q)=q\cdot p(q)\)<br>\(\pi(q)=I(q)-C(q)\)<br>Break-even: solve \(\pi(q)=0\).` },
+    { q: R`When does \(\displaystyle\lim_{x\to a}f(x)\) exist?`, a: R`When the left and right limits agree: \(\displaystyle\lim_{x\to a^-}f(x)=\lim_{x\to a^+}f(x)\). The value \(f(a)\) itself plays no role.` },
+    { q: 'Limit rules with 0 and ∞', a: R`\(\dfrac{k}{\pm\infty}=0\qquad \dfrac{k}{0^{+}}=+\infty\ \ (k\gt 0)\qquad \dfrac{k}{0^{-}}=-\infty\ \ (k\gt 0)\)<br>\(e^{+\infty}=+\infty\qquad e^{-\infty}=0\)<br>\(\ln(+\infty)=+\infty\qquad \ln(0^+)=-\infty\)<br>\((+\infty)^k=+\infty\ (k\gt 0)\)` },
+    { q: 'Vertical vs horizontal asymptote', a: R`<b>Vertical</b> \(x=a\): a one-sided limit at \(a\) is \(\pm\infty\).<br><b>Horizontal</b> \(y=L\): \(\displaystyle\lim_{x\to\pm\infty}f(x)=L\) (finite). Say which side: left (\(-\infty\)) or right (\(+\infty\)).` },
+    { q: R`Continuity at \(x=a\): the three checks`, a: R`1. \(f(a)\) exists<br>2. \(\displaystyle\lim_{x\to a}f(x)\) exists (left = right)<br>3. \(\displaystyle\lim_{x\to a}f(x)=f(a)\)` },
+    { q: 'Three types of discontinuity', a: R`<b>Removable:</b> the limit exists but differs from \(f(a)\) (or \(f(a)\) is undefined).<br><b>Jump:</b> both one-sided limits are finite but different.<br><b>Infinite:</b> a one-sided limit is \(\pm\infty\).` }
+  ],
+  worked: {
+    title: 'Find a so that a piecewise function is continuous',
+    src: 'Practice Problems 2.1, P6',
+    q: R`\[f(x)=\begin{cases}\dfrac{1}{3-x} & \text{if } x\lt 1\\[6pt] -x^2+a & \text{if } x\ge 1\end{cases}\] Find the value of \(a\) that makes \(f\) continuous, and classify the discontinuity if \(a\) takes any other value.`,
+    steps: [
+      R`Each piece is continuous on its own interval. \(\dfrac{1}{3-x}\) only breaks at \(x=3\), which is not in \(x\lt 1\). So the only point to check is the join, \(x=1\).`,
+      R`Left limit, using the top piece: \(\displaystyle\lim_{x\to 1^-}\dfrac{1}{3-x}=\dfrac{1}{3-1}=\dfrac{1}{2}\)`,
+      R`Right limit and the value, using the bottom piece: \(\displaystyle\lim_{x\to 1^+}(-x^2+a)=f(1)=-1+a\)`,
+      R`Set them equal: \(\dfrac{1}{2}=-1+a \Rightarrow a=\dfrac{3}{2}\)`,
+      R`If \(a\neq\dfrac{3}{2}\), both one-sided limits are finite but different, so it is a <b>jump</b> discontinuity at \(x=1\).`
+    ],
+    final: R`\(a=\dfrac{3}{2}\). For any other \(a\): jump discontinuity at \(x=1\).`
+  },
+  problems: [
+    { id: 'p21a', src: 'Lecture 2.1', q: R`Find the domain of \(j(x)=\ln(x+2)\) and of \(h(x)=\sqrt{x-1}\).`,
+      steps: [R`A log needs a strictly positive argument: \(x+2\gt 0\Rightarrow x\gt -2\).`, R`A square root needs a non-negative argument: \(x-1\ge 0\Rightarrow x\ge 1\).`],
+      final: R`\(D(j)=(-2,+\infty)\), \(D(h)=[1,+\infty)\).` },
+    { id: 'p21b', src: 'Practice 2.1, P4', q: R`A firm has price \(P(q)=107-2q\) and cost \(C(q)=200+3q\). Find the profit function and the break-even quantity.`,
+      steps: [R`\(I(q)=q\cdot P(q)=107q-2q^2\)`, R`\(\Pi(q)=I(q)-C(q)=-2q^2+104q-200\)`, R`Solve \(-2q^2+104q-200=0\), i.e. \(q^2-52q+100=0\): \(q=\dfrac{52\pm\sqrt{2704-400}}{2}=\dfrac{52\pm 48}{2}\), so \(q=2\) or \(q=50\).`, R`Break-even means the moment losses turn into profit, which is the smaller root.`],
+      final: R`\(\Pi(q)=-2q^2+104q-200\). Break-even at \(q=2\). (At \(q=50\) the firm goes back into losses.)`, num: 2, numLabel: 'q =' },
+    { id: 'p21c', src: 'Practice 2.1, P2', q: R`Let \(f(x)=e^{|x|}\) and \(g(x)=\dfrac{1}{x-3}\). Find \(h=f\circ g\) and \(m=g\circ f\) and their domains.`,
+      steps: [R`\(h(x)=f\big(g(x)\big)=e^{\left|\frac{1}{x-3}\right|}\). The fraction needs \(x\neq 3\).`, R`\(m(x)=g\big(f(x)\big)=\dfrac{1}{e^{|x|}-3}\). The denominator is zero when \(e^{|x|}=3\), i.e. \(|x|=\ln 3\).`],
+      final: R`\(D(h)=\mathbb{R}\setminus\{3\}\), \(D(m)=\mathbb{R}\setminus\{-\ln 3,\ \ln 3\}\). Range of \(h\) is \((1,+\infty)\) because the exponent is always positive.` },
+    { id: 'p21d', src: 'Practice 2.1, P5', q: R`\[f(x)=\begin{cases}x^2 & -4\lt x\lt 0\\ 1-x & 0\le x\le 1\\ (1-x)^2 & 1\lt x\lt 4\end{cases}\] Study the continuity of \(f\) and classify any discontinuities without a graph.`,
+      steps: [R`Every piece is a polynomial, so only the joins \(x=0\) and \(x=1\) need checking.`, R`At \(x=0\): left \(=0^2=0\), right \(=1-0=1\). Finite and different.`, R`At \(x=1\): left \(=1-1=0\), right \(=(1-1)^2=0\), and \(f(1)=0\). All three agree.`],
+      final: R`Jump discontinuity at \(x=0\). Continuous at \(x=1\). Continuous everywhere else in \((-4,4)\).` },
+    { id: 'p21e', src: 'Practice 2.1, P6a', q: R`Calculate \(\displaystyle\lim_{x\to-\infty}\left(\dfrac{1}{3-x}+2\right)\).`,
+      steps: [R`As \(x\to-\infty\), \(3-x\to+\infty\).`, R`So \(\dfrac{1}{3-x}\to\dfrac{1}{+\infty}=0\).`],
+      final: R`\(0+2=2\). So \(y=2\) is a horizontal asymptote on the left.`, num: 2, numLabel: 'limit =' },
+    { id: 'p21f', src: 'Practice 2.1, P3', q: R`\(g(x)=e^{-2|x|}\) if \(x\neq 0\), and \(g(0)=0\). Is \(g\) continuous at 0? Does it have asymptotes?`,
+      steps: [R`\(\displaystyle\lim_{x\to 0}e^{-2|x|}=e^0=1\) from both sides, so the limit exists.`, R`But \(g(0)=0\neq 1\).`, R`As \(x\to\pm\infty\), \(-2|x|\to-\infty\), so \(e^{-2|x|}\to 0\).`],
+      final: R`Removable discontinuity at \(x=0\). Horizontal asymptote \(y=0\) on both sides, no vertical asymptotes. Range \([0,1)\).` }
+  ],
+  traps: [
+    R`<b>Using \(f(a)\) to find a limit.</b> The limit only cares about values near \(a\), never at \(a\).`,
+    R`<b>Checking one side only.</b> For a limit at a join you must compute both the left and the right piece.`,
+    R`<b>Forgetting the context.</b> If \(x\) is units produced or a price, the contextual domain starts at 0 or above.`,
+    R`<b>\(\ln\) of zero.</b> The domain of \(\ln x\) is \(x\gt 0\), strictly. Zero is excluded.`,
+    R`<b>Wrong order in composition.</b> In \(f\circ g\) the inside function is \(g\).`
+  ]
+},
+{
+  id: 't22', code: '2.2', name: 'Derivatives',
+  exam: 'Rules (product, quotient, chain), interpreting f′(a) with units, average vs instantaneous rate, tangent line and linear approximation, differentiability vs continuity.',
+  cards: [
+    { q: 'What does f′(a) mean?', a: R`The instantaneous rate of change of \(f\) at \(a\), and the slope of the tangent line there.<br>\(f'(a)\gt 0\): increasing. \(f'(a)\lt 0\): decreasing.<br>\[f'(a)=\lim_{h\to 0}\dfrac{f(a+h)-f(a)}{h}\]` },
+    { q: 'Units of a derivative', a: R`Units of \(f\) divided by units of \(x\).<br>Profit in thousands of € per day, so \(\pi'(t)\) is in thousands of € per day. \(\pi'(50)=0.018\) means "growing by about €18 per day on day 50".` },
+    { q: 'What does "marginal" mean?', a: R`Marginal = derivative. \(C'(q)\) is the marginal cost: roughly the extra cost of one more unit.` },
+    { q: 'Basic derivatives', a: R`\((a+bx)'=b\)<br>\((x^n)'=n\,x^{n-1}\)<br>\((e^x)'=e^x\)<br>\((\ln x)'=\dfrac{1}{x}\)<br>\((\sqrt{x})'=\dfrac{1}{2\sqrt{x}}\qquad \left(\dfrac{1}{x}\right)'=-\dfrac{1}{x^2}\)` },
+    { q: 'Product rule', a: R`\((f\cdot g)'=f'\cdot g+f\cdot g'\)` },
+    { q: 'Quotient rule', a: R`\[\left(\dfrac{f}{g}\right)'=\dfrac{f'\cdot g-f\cdot g'}{g^2}\] Order on top: derivative of the top first.` },
+    { q: 'Chain rule (and the three shortcuts)', a: R`\(\big(f(g(x))\big)'=f'\big(g(x)\big)\cdot g'(x)\)<br>\(\big(e^{u}\big)'=e^{u}\cdot u'\)<br>\(\big(\ln u\big)'=\dfrac{u'}{u}\)<br>\(\big(u^n\big)'=n\,u^{n-1}\cdot u'\)` },
+    { q: 'Tangent line at x = a', a: R`\[L(x)=f(a)+f'(a)\,(x-a)\] Also called the linear approximation: \(f(x)\approx L(x)\) near \(a\).` },
+    { q: 'Average rate of change on [a, b]', a: R`\[\dfrac{f(b)-f(a)}{b-a}\] This is the slope of the secant. The derivative is its limit as the interval shrinks.` },
+    { q: 'Differentiable vs continuous', a: R`Differentiable ⇒ continuous. The converse is false: \(|x|\) is continuous at 0 but has a corner there, so it is not differentiable.` }
+  ],
+  worked: {
+    title: 'Product rule plus chain rule',
+    src: 'Lecture 2.2, Example 1a',
+    q: R`Calculate \(\left(x^2\,e^{1/x}\right)'\).`,
+    steps: [
+      R`It's a product, so set \(f=x^2\) and \(g=e^{1/x}\). Then \((fg)'=f'g+fg'\).`,
+      R`\(f'=2x\).`,
+      R`\(g\) needs the chain rule, with inside \(u=\dfrac{1}{x}\) and \(u'=-\dfrac{1}{x^2}\). So \(g'=e^{1/x}\cdot\left(-\dfrac{1}{x^2}\right)\).`,
+      R`Put it together: \(2x\,e^{1/x}+x^2\cdot e^{1/x}\cdot\left(-\dfrac{1}{x^2}\right)=2x\,e^{1/x}-e^{1/x}\)`,
+      R`Factor out \(e^{1/x}\).`
+    ],
+    final: R`\(\left(x^2e^{1/x}\right)'=e^{1/x}(2x-1)\)`
+  },
+  problems: [
+    { id: 'p22a', src: 'Lecture 2.2', q: R`Differentiate \(\dfrac{e^x}{x^2}\) using the quotient rule.`,
+      steps: [R`Top \(f=e^x\), \(f'=e^x\). Bottom \(g=x^2\), \(g'=2x\).`, R`\(\dfrac{e^x\cdot x^2-e^x\cdot 2x}{(x^2)^2}=\dfrac{e^x\,x\,(x-2)}{x^4}\)`, R`Cancel one \(x\).`],
+      final: R`\(\dfrac{e^x(x-2)}{x^3}\)` },
+    { id: 'p22b', src: 'Practice 2.2, P8', q: R`Daily revenue (thousands of €) is \(R(t)=0.01t^3-0.6t^2+15t+20\), with \(t\) in days. (a) Average rate of change from day 20 to day 22? (b) \(R'(20)\) and its meaning?`,
+      steps: [R`\(R(20)=80-240+300+20=160\). \(R(22)=106.48-290.4+330+20=166.08\).`, R`Average: \(\dfrac{166.08-160}{22-20}=3.04\) thousand €/day.`, R`\(R'(t)=0.03t^2-1.2t+15\Rightarrow R'(20)=12-24+15=3\).`],
+      final: R`(a) 3.04 thousand €/day. (b) \(R'(20)=3\): on day 20 revenue is rising at about €3,000 per day.`, num: 3, numLabel: "R′(20) =" },
+    { id: 'p22c', src: 'Practice 2.2, P8d', q: R`Same \(R(t)\). Write the tangent line at \(t=20\) and use it to estimate \(R(20.5)\).`,
+      steps: [R`You have \(R(20)=160\) and \(R'(20)=3\).`, R`\(L(t)=R(20)+R'(20)(t-20)=160+3(t-20)\)`, R`\(L(20.5)=160+3(0.5)\)`],
+      final: R`\(R(20.5)\approx 161.5\) thousand €, i.e. about €161,500. (The exact value is 161.50125.)`, num: 161.5, numLabel: 'R(20.5) ≈' },
+    { id: 'p22d', src: 'Practice 2.2, P9', q: R`Demand is \(q(p)=800e^{-0.04p}\) and revenue is \(I(p)=p\,q(p)\). Find \(q'(p)\) and \(I'(p)\).`,
+      steps: [R`Chain rule: \(q'(p)=800e^{-0.04p}\cdot(-0.04)=-32e^{-0.04p}\). It's always negative, so demand falls as price rises.`, R`Product rule on \(800p\,e^{-0.04p}\): \(800e^{-0.04p}+800p\cdot e^{-0.04p}\cdot(-0.04)\)`, R`Factor out \(800e^{-0.04p}\).`],
+      final: R`\(q'(p)=-32e^{-0.04p}\), \(I'(p)=800e^{-0.04p}(1-0.04p)\)` },
+    { id: 'p22e', src: 'Practice 2.2, P10', q: R`\(C(x)=1200+18x+0.03x^2\) and \(A(x)=\dfrac{C(x)}{x}\). Find \(C'(100)\) and \(A'(100)\), then interpret them.`,
+      steps: [R`\(C'(x)=18+0.06x\Rightarrow C'(100)=24\).`, R`Split \(A\) first: \(A(x)=\dfrac{1200}{x}+18+0.03x\). Then \(A'(x)=-\dfrac{1200}{x^2}+0.03\).`, R`\(A'(100)=-\dfrac{1200}{10000}+0.03=-0.12+0.03\)`],
+      final: R`\(C'(100)=24\): one more unit costs about €24. \(A'(100)=-0.09\): the cost per unit falls by about €0.09.`, num: -0.09, numLabel: "A′(100) =" },
+    { id: 'p22f', src: 'Lecture 2.2, Example 1b', q: R`Find the tangent line to \(f(x)=\ln(x^4)\) at \(x=-e\).`,
+      steps: [R`Chain rule: \(f'(x)=\dfrac{4x^3}{x^4}=\dfrac{4}{x}\), so \(f'(-e)=-\dfrac{4}{e}\).`, R`\(f(-e)=\ln\big((-e)^4\big)=\ln(e^4)=4\)`, R`\(L(x)=4-\dfrac{4}{e}\big(x+e\big)=4-\dfrac{4x}{e}-4\)`],
+      final: R`\(L(x)=-\dfrac{4}{e}\,x\)` }
+  ],
+  traps: [
+    R`<b>Forgetting the inner derivative.</b> \(\big(e^{3x^2}\big)'=6x\,e^{3x^2}\), not \(e^{3x^2}\).`,
+    R`<b>Quotient rule order.</b> It's \(f'g-fg'\) on top. Swapping the order flips the sign.`,
+    R`<b>Missing units in an interpretation.</b> Always say "€ per day" or "€ per unit", and scale by 1000 if the function is in thousands.`,
+    R`<b>Simplify before you differentiate.</b> Split \(\dfrac{C(x)}{x}\) into separate terms first. It saves a quotient rule.`,
+    R`<b>Average vs instantaneous.</b> "Between day 20 and 22" means the average-rate formula. "On day 20" means the derivative.`
+  ]
+},
+{
+  id: 't23', code: '2.3', name: 'Function analysis & optimization',
+  exam: 'Stationary points, increasing/decreasing intervals, second derivative test, concavity and inflection points, global max/min on a contextual domain (always compare endpoints), piecewise profit with kinks.',
+  cards: [
+    { q: 'What is a stationary point?', a: R`A point where the tangent is horizontal: \(f'(x^*)=0\).` },
+    { q: 'Where can a max or min be?', a: R`Only at these candidates:<br>1. stationary points (\(f'=0\))<br>2. endpoints of the (contextual) domain<br>3. points where \(f\) is not continuous or not differentiable (kinks, joins)<br>A max is <b>not</b> always where \(f'=0\).` },
+    { q: 'Second derivative test', a: R`At a stationary point \(x^*\):<br>\(f''(x^*)\gt 0\) ⇒ local <b>min</b> (cup shape)<br>\(f''(x^*)\lt 0\) ⇒ local <b>max</b> (cap shape)<br>\(f''(x^*)=0\) ⇒ inconclusive, so use a sign table of \(f'\).` },
+    { q: 'Increasing and decreasing intervals', a: R`Find where \(f'=0\), then test the sign of \(f'\) in each interval.<br>\(f'\gt 0\): increasing. \(f'\lt 0\): decreasing.<br>A sign change from \(+\) to \(-\) is a max, from \(-\) to \(+\) a min.` },
+    { q: 'Concavity and inflection point', a: R`\(f''\gt 0\): concave upwards. \(f''\lt 0\): concave downwards.<br>Inflection: \(f''(a)=0\) <b>and</b> the sign of \(f''\) changes. Example: \(x^3\) at 0.` },
+    { q: 'Global vs local', a: R`Local: highest or lowest compared with nearby points. Global: highest or lowest on the whole (contextual) domain. Find it by evaluating \(f\) at <b>every</b> candidate and comparing.` },
+    { q: 'The 6-step optimization recipe', a: R`1. Contextual domain<br>2. \(f'(x)\)<br>3. Solve \(f'=0\) and list kinks and joins<br>4. Classify (sign of \(f'\) or \(f''\))<br>5. Evaluate \(f\) at all candidates <b>and</b> endpoints<br>6. Answer in context, with units` }
+  ],
+  worked: {
+    title: 'Optimize advertising spend on a closed domain',
+    src: 'Practice 2.3, P6',
+    q: R`Monthly profit (thousands of €) is \(P(x)=150-200e^{-0.2x}-10x\), where \(x\) is advertising spend in thousands of €, \(0\le x\le 20\). Find the global maximum and minimum.`,
+    steps: [
+      R`\(P'(x)=-200e^{-0.2x}\cdot(-0.2)-10=40e^{-0.2x}-10\)`,
+      R`\(P'(x)=0\Rightarrow e^{-0.2x}=\dfrac{1}{4}\Rightarrow -0.2x=\ln\dfrac{1}{4}=-\ln 4\Rightarrow x=5\ln 4\approx 6.93\). This lies in \([0,20]\).`,
+      R`\(P''(x)=-8e^{-0.2x}\lt 0\) for every \(x\), so \(x=5\ln 4\) is a local max.`,
+      R`Compare the candidates: \(P(0)=150-200-0=-50\). \(P(20)=150-200e^{-4}-200\approx-53.66\). \(P(6.93)=150-50-69.31\approx 30.69\).`,
+      R`The largest value is the global max, the smallest the global min.`
+    ],
+    final: R`Global max at \(x=5\ln4\approx 6.93\): spend about €6,930 for a profit of about €30,690. Global min at the endpoint \(x=20\).`
+  },
+  problems: [
+    { id: 'p23a', src: 'Lecture 2.3', q: R`Daily profit is \(\pi(q)=100q-q^2\). Find the optimal quantity and the maximum profit.`,
+      steps: [R`\(\pi'(q)=100-2q=0\Rightarrow q^*=50\)`, R`\(\pi''(q)=-2\lt 0\), so it's a max.`, R`\(\pi(50)=5000-2500\)`],
+      final: R`\(q^*=50\) units, \(\pi^*=€2500\).`, num: 2500, numLabel: 'max profit =' },
+    { id: 'p23b', src: 'Lecture 2.3', q: R`\(\pi(x)=-2.5x^2+47.5x-85\) (\(x\) in thousands of units), \(D_c=(0,\ 188.89)\). Optimize the profit.`,
+      steps: [R`\(\pi'(x)=-5x+47.5=0\Rightarrow x=9.5\)`, R`\(\pi''(x)=-5\lt 0\), so it's a local max.`, R`It is also the global max, because \(\pi\) is negative near both ends of the domain (\(\pi(0)=-85\)).`],
+      final: R`\(x=9.5\), i.e. produce <b>9,500 units</b>. (Max profit \(\pi(9.5)=140.625\).)`, num: 9.5, numLabel: 'x =' },
+    { id: 'p23c', src: 'Own example', q: R`For \(f(x)=x^3-3x\), find the increasing and decreasing intervals and all local extrema.`,
+      steps: [R`\(f'(x)=3x^2-3=3(x-1)(x+1)=0\Rightarrow x=\pm 1\)`, R`Sign of \(f'\): \(+\) on \((-\infty,-1)\), \(-\) on \((-1,1)\), \(+\) on \((1,+\infty)\).`, R`\(f(-1)=-1+3=2\), \(f(1)=1-3=-2\)`],
+      final: R`Increasing on \((-\infty,-1)\) and \((1,+\infty)\), decreasing on \((-1,1)\). Local max at \((-1,2)\), local min at \((1,-2)\).` },
+    { id: 'p23d', src: 'Practice 2.3, P3', q: R`Profit (in \(x\) hundreds of units) is \[P(x)=\begin{cases}4x & x\le 1\\ x^2-2x+5 & 1\lt x\le 2\\ 7-x & x\gt 2\end{cases}\] on \(0.5\le x\le 3\). Where is \(P\) not differentiable, and which production maximizes profit?`,
+      steps: [R`Check continuity at the joins. \(x=1\): \(4=1-2+5=4\) ✓. \(x=2\): \(4-4+5=5=7-2\) ✓. So \(P\) is continuous.`, R`Slopes at \(x=1\): left \(4\), right \(2x-2=0\). They differ, so there's a kink.`, R`Slopes at \(x=2\): left \(2x-2=2\), right \(-1\). They differ, so there's another kink.`, R`\(P\) increases on \([0.5,2]\) and decreases after 2, so the max is at the kink \(x=2\) with \(P(2)=5\).`],
+      final: R`Not differentiable at \(x=1\) and \(x=2\). Max profit at \(x=2\), i.e. <b>200 units</b>. Here the max is at a kink, not where \(P'=0\).`, num: 2, numLabel: 'x =' },
+    { id: 'p23e', src: 'Practice 2.3, P5', q: R`Is every stationary point an extreme point? Give a counterexample.`,
+      steps: [R`Try \(f(x)=x^3\): \(f'(0)=0\), so 0 is stationary.`, R`But \(f'=3x^2\ge 0\) on both sides, so \(f\) keeps increasing through 0.`],
+      final: R`No. \(x^3\) has a stationary <b>inflection</b> point at 0, which is neither a max nor a min.` },
+    { id: 'p23f', src: 'Practice 2.3, P1', q: R`Units sold are \(x=100-p\). If \(\Pi'(p)=p^2-188p+8811\) on \([0,100]\), find the candidates and the optimal price, given \(\Pi(0)\approx-274483\), \(\Pi(89)\approx 111.3\), \(\Pi(99)\approx-55.3\), \(\Pi(100)=-50\).`,
+      steps: [R`\(p=\dfrac{188\pm\sqrt{188^2-4\cdot 8811}}{2}=\dfrac{188\pm 10}{2}\Rightarrow p=89\) or \(p=99\)`, R`Candidates: \(0,\ 89,\ 99,\ 100\). Include the endpoints.`, R`Compare the values: 89 gives the largest.`],
+      final: R`Optimal price \(p=89\), profit ≈ 111.33. \(p=99\) is a local min and \(p=100\) a local max (endpoint).`, num: 89, numLabel: 'p =' }
+  ],
+  traps: [
+    R`<b>Skipping the endpoints.</b> On a closed contextual domain the global max or min is often at an endpoint.`,
+    R`<b>\(f''=0\) means inflection?</b> Only if the sign of \(f''\) actually changes. Otherwise it's inconclusive.`,
+    R`<b>Answering "x = 9.5" with no context.</b> If \(x\) is in thousands of units, write 9,500 units.`,
+    R`<b>Ignoring kinks.</b> In a piecewise profit function, check the joins as candidates too.`,
+    R`<b>Solving \(e^{-0.2x}=\tfrac14\).</b> Take \(\ln\) of both sides: \(\ln\tfrac14=-\ln 4\).`
+  ]
+},
+{
+  id: 't24', code: '2.4', name: 'Taylor approximation',
+  exam: 'Build Pₙ(x) from derivatives, read derivatives back from a given Pₙ, sketch f near a using the sign of Pₙ − P₁ (above/below the tangent, concavity, inflection).',
+  cards: [
+    { q: 'Taylor polynomial of order n around a', a: R`\[P_n(x)=f(a)+f'(a)(x-a)+\dfrac{f''(a)}{2!}(x-a)^2+\cdots+\dfrac{f^{(n)}(a)}{n!}(x-a)^n\] \(P_1\) is the tangent line.` },
+    { q: 'Factorials you need', a: R`\(2!=2\quad 3!=6\quad 4!=24\quad 5!=120\quad 6!=720\quad 7!=5040\)` },
+    { q: 'Reading derivatives back from Pₙ', a: R`If the coefficient of \((x-a)^k\) is \(c_k\), then \[f^{(k)}(a)=k!\cdot c_k\] A missing power means that derivative is 0.` },
+    { q: 'Sketching f near a', a: R`Look at the first term after the linear part, \(c\,(x-a)^m\). Its sign gives the sign of \(f-L\).<br><b>m even:</b> \(c\gt 0\) above the tangent on both sides (concave up). \(c\lt 0\) below (concave down).<br><b>m odd:</b> \(f\) crosses its tangent, so it's an inflection point. With \(c\gt 0\): below on the left, above on the right.` },
+    { q: 'Must-know expansions around 0', a: R`\(e^x\approx 1+x+\dfrac{x^2}{2}+\dfrac{x^3}{6}\)<br>\(e^{-x^2}\approx 1-x^2\)<br>\(\ln x\) around 1: \((x-1)-\dfrac{(x-1)^2}{2}+\dfrac{(x-1)^3}{3}\)` },
+    { q: 'Why Taylor at all?', a: R`Polynomials are easy to evaluate, differentiate, integrate and optimize. \(P_n\) has the same value and the same first \(n\) derivatives as \(f\) at \(a\). It's only valid near \(a\), and a higher order gives a better approximation.` }
+  ],
+  worked: {
+    title: 'Third-order Taylor polynomial of ln x around 1',
+    src: 'Lecture 2.4, Example 1',
+    q: R`Let \(f(x)=\ln x\). Find \(P_3(x)\) around \(x=1\).`,
+    steps: [
+      R`\(f(1)=\ln 1=0\)`,
+      R`\(f'(x)=\dfrac{1}{x}\Rightarrow f'(1)=1\)`,
+      R`\(f''(x)=-\dfrac{1}{x^2}\Rightarrow f''(1)=-1\)`,
+      R`\(f'''(x)=\dfrac{2}{x^3}\Rightarrow f'''(1)=2\)`,
+      R`\(P_3=0+1\cdot(x-1)+\dfrac{-1}{2!}(x-1)^2+\dfrac{2}{3!}(x-1)^3\)`
+    ],
+    final: R`\(P_3(x)=(x-1)-\dfrac{1}{2}(x-1)^2+\dfrac{1}{3}(x-1)^3\)`
+  },
+  problems: [
+    { id: 'p24a', src: 'Practice 2.4, P9', q: R`Find the third-order Taylor polynomial of \(f(x)=2e^x-x^2\) at \(x=0\), and the tangent line there.`,
+      steps: [R`\(f(0)=2\). \(f'=2e^x-2x\Rightarrow f'(0)=2\).`, R`\(f''=2e^x-2\Rightarrow f''(0)=0\). \(f'''=2e^x\Rightarrow f'''(0)=2\).`, R`\(P_3=2+2x+0+\dfrac{2}{6}x^3\)`],
+      final: R`\(P_3(x)=2+2x+\dfrac{x^3}{3}\). Tangent line \(y=2+2x\), which is \(P_1\).` },
+    { id: 'p24b', src: 'Practice 2.4, P10', q: R`\(P_4(x)=-3(x-2)-(x-2)^4\) around \(a=2\). Find \(f(2),\ f'(2),\ f''(2),\ f'''(2),\ f^{(4)}(2)\) and describe \(f\) near 2.`,
+      steps: [R`There's no constant term, so \(f(2)=0\). The coefficient of \((x-2)\) gives \(f'(2)=-3\).`, R`No \((x-2)^2\) or \((x-2)^3\) terms, so \(f''(2)=f'''(2)=0\).`, R`\(f^{(4)}(2)=4!\cdot(-1)=-24\)`, R`\(P_4-P_1=-(x-2)^4\le 0\): even power with a negative coefficient.`],
+      final: R`\(0,\ -3,\ 0,\ 0,\ -24\). \(f\) lies <b>below</b> its tangent on both sides, so it's concave downwards near 2.`, num: -24, numLabel: 'f⁽⁴⁾(2) =' },
+    { id: 'p24c', src: 'Practice 2.4, P7', q: R`\(P_7(x)=-2(x-4)-3(x-4)^7\) around \(a=4\). Sketch \(f\) near 4.`,
+      steps: [R`Tangent: \(L(x)=-2(x-4)\). It passes through \((4,0)\) with slope \(-2\).`, R`\(P_7-P_1=-3(x-4)^7\): an odd power, so the sign changes at 4.`, R`For \(x\lt 4\): \((x-4)^7\lt 0\), so \(-3(\cdot)\gt 0\) and \(f\) is above the tangent. For \(x\gt 4\): below.`],
+      final: R`Inflection point at \(x=4\). \(f\) is above the tangent on the left (concave up) and below on the right (concave down).` },
+    { id: 'p24d', src: 'Practice 2.4, P8', q: R`Profit \(\pi(t)=e^{t/2}-\dfrac{1}{2}t^2\). Find \(P_2(t)\) around \(t=0\) and the concavity at 0.`,
+      steps: [R`\(\pi(0)=1\)`, R`\(\pi'(t)=\dfrac{1}{2}e^{t/2}-t\Rightarrow \pi'(0)=\dfrac{1}{2}\)`, R`\(\pi''(t)=\dfrac{1}{4}e^{t/2}-1\Rightarrow \pi''(0)=-\dfrac{3}{4}\)`, R`\(P_2=1+\dfrac{1}{2}t+\dfrac{-3/4}{2}t^2\)`],
+      final: R`\(P_2(t)=1+\dfrac{1}{2}t-\dfrac{3}{8}t^2\). The coefficient \(-\dfrac{3}{8}\lt 0\), so \(\pi\) is below its tangent: concave downwards.`, num: -0.375, numLabel: 'coef of t² =' },
+    { id: 'p24e', src: 'Lecture 2.4, Example 2a', q: R`\(h(1)=2\), \(h'(1)=3\), \(h''(1)=h'''(1)=h^{(4)}(1)=0\), \(h^{(5)}(1)=4\). Find \(P_5\) and sketch \(h\) near 1.`,
+      steps: [R`\(P_5=2+3(x-1)+\dfrac{4}{5!}(x-1)^5\), and \(\dfrac{4}{120}=\dfrac{1}{30}\)`, R`\(P_5-P_1=\dfrac{1}{30}(x-1)^5\): odd power, positive coefficient.`],
+      final: R`\(P_5(x)=2+3(x-1)+\dfrac{1}{30}(x-1)^5\). Inflection at 1: below the tangent on the left, above on the right.` },
+    { id: 'p24f', src: 'Practice 2.4, P11', q: R`Find the fourth-order Taylor polynomial of \(f(x)=\dfrac{1}{x}\) at \(x=1\).`,
+      steps: [R`\(f'=-\dfrac{1}{x^2},\ f''=\dfrac{2}{x^3},\ f'''=-\dfrac{6}{x^4},\ f^{(4)}=\dfrac{24}{x^5}\)`, R`At 1: \(1,\ -1,\ 2,\ -6,\ 24\)`, R`Divide by the factorials: \(\dfrac{2}{2}=1,\ \dfrac{-6}{6}=-1,\ \dfrac{24}{24}=1\)`],
+      final: R`\(P_4(x)=1-(x-1)+(x-1)^2-(x-1)^3+(x-1)^4\)` },
+    { id: 'p24g', src: 'Practice 2.4, P12', q: R`With \(Q_n\) the Taylor polynomials of \(e^x\) at 0, write \(g(x)=Q_2\big(Q_1(x)\big)\).`,
+      steps: [R`\(Q_1(x)=1+x\), \(Q_2(x)=1+x+\dfrac{x^2}{2}\)`, R`\(Q_2(1+x)=1+(1+x)+\dfrac{(1+x)^2}{2}\)`, R`Expand: \(\dfrac{4+2x+1+2x+x^2}{2}\)`],
+      final: R`\(g(x)=\dfrac{x^2+4x+5}{2}\)` }
+  ],
+  traps: [
+    R`<b>Forgetting to divide by k!.</b> The coefficient is \(\dfrac{f^{(k)}(a)}{k!}\), not \(f^{(k)}(a)\).`,
+    R`<b>Reading back without multiplying.</b> \(f^{(k)}(a)=k!\cdot c_k\). If \(c_4=-1\), then \(f^{(4)}=-24\).`,
+    R`<b>Expanding around 0 when a ≠ 0.</b> Use powers of \((x-a)\) and keep them unexpanded.`,
+    R`<b>Even vs odd confusion.</b> An even first non-linear power means a cup or cap. An odd one means an inflection.`,
+    R`<b>"Positive x³ term so raise prices".</b> One term doesn't decide anything. Look at \(P'\) over the relevant interval.`
+  ]
+},
+{
+  id: 't25', code: '2.5', name: 'Integration',
+  exam: 'Indefinite integrals (+C), using a known value to find C, definite integrals with Barrow’s rule, signed area from a graph, area of a region, marginal → total change, average value, density functions.',
+  cards: [
+    { q: 'What is an antiderivative?', a: R`\(F\) with \(F'=f\). Then \(\displaystyle\int f(x)\,dx=F(x)+C\). Never forget \(+C\) on an indefinite integral.` },
+    { q: 'Basic integrals', a: R`\(\displaystyle\int x^n\,dx=\dfrac{x^{n+1}}{n+1}+C\quad(n\neq-1)\)<br>\(\displaystyle\int \dfrac{1}{x}\,dx=\ln|x|+C\)<br>\(\displaystyle\int e^{kx}\,dx=\dfrac{e^{kx}}{k}+C\)<br>\(\displaystyle\int k\,dx=kx+C\)` },
+    { q: 'Roots and fractions: rewrite first', a: R`\(\dfrac{3}{\sqrt{q}}=3q^{-1/2}\Rightarrow\displaystyle\int 3q^{-1/2}dq=\dfrac{3q^{1/2}}{1/2}=6\sqrt{q}+K\)` },
+    { q: 'Barrow’s rule (definite integral)', a: R`\[\int_a^b f(x)\,dx=\Big[F(x)\Big]_a^b=F(b)-F(a)\] No \(+C\) needed.` },
+    { q: 'Signed area', a: R`\(\displaystyle\int_a^b f\) is the area above the x-axis minus the area below it. From a graph, add up triangles and rectangles with their signs.` },
+    { q: 'Properties of definite integrals', a: R`\(\displaystyle\int_a^b f=\int_a^c f+\int_c^b f\)<br>\(\displaystyle\int_a^a f=0\qquad \int_b^a f=-\int_a^b f\)<br>\(\displaystyle\int (\alpha f+\beta g)=\alpha\int f+\beta\int g\)` },
+    { q: 'Marginal → total', a: R`Total change: \(\displaystyle C(b)-C(a)=\int_a^b C'(x)\,dx\)<br>Total cost: \(\displaystyle C(x)=C(0)+\int_0^x C'(t)\,dt\), where \(C(0)\) is the fixed cost.` },
+    { q: 'Average value on [a, b]', a: R`\[f_{\text{avg}}=\dfrac{1}{b-a}\int_a^b f(x)\,dx\]` },
+    { q: 'Density function', a: R`\(f(x)\ge 0\) for all \(x\), and \(\displaystyle\int_{-\infty}^{+\infty}f(x)\,dx=1\).` }
+  ],
+  worked: {
+    title: 'From marginal cost to total cost',
+    src: 'Practice 2.5, P1',
+    q: R`Marginal cost is \(\dfrac{dC}{dq}=\dfrac{3}{\sqrt{q}}\). Producing 100 units costs €400. Find the cost of 10,000 units.`,
+    steps: [
+      R`Rewrite as a power: \(\dfrac{3}{\sqrt{q}}=3q^{-1/2}\).`,
+      R`Integrate: \(C(q)=\displaystyle\int 3q^{-1/2}dq=\dfrac{3q^{1/2}}{1/2}+K=6\sqrt{q}+K\)`,
+      R`Use the known value: \(C(100)=6\cdot 10+K=400\Rightarrow K=340\)`,
+      R`\(C(q)=6\sqrt{q}+340\). Now plug in 10,000: \(6\cdot 100+340\).`
+    ],
+    final: R`\(C(10\,000)=€940\)`
+  },
+  problems: [
+    { id: 'p25a', src: 'Practice 2.5, P3', q: R`\(\displaystyle\int_0^2(3x^2+ax-1)\,dx=8\). Find \(a\).`,
+      steps: [R`Antiderivative: \(x^3+\dfrac{a x^2}{2}-x\)`, R`Evaluate from 0 to 2: \(8+2a-2-0\)`, R`\(6+2a=8\)`],
+      final: R`\(a=1\)`, num: 1, numLabel: 'a =' },
+    { id: 'p25b', src: 'Practice 2.5, P2', q: R`Marginal cost is \(m(x)=10e^{0.01x}\) €/unit. (a) How much does cost rise from 10 to 100 units? (b) Find \(C(x)\) if fixed cost is €1,000.`,
+      steps: [R`\(\displaystyle\int 10e^{0.01x}dx=\dfrac{10}{0.01}e^{0.01x}=1000e^{0.01x}\)`, R`(a) \(\Big[1000e^{0.01x}\Big]_{10}^{100}=1000\,(e^{1}-e^{0.1})\)`, R`\(=1000(2.71828-1.10517)\)`, R`(b) \(C(x)=1000+\Big[1000e^{0.01t}\Big]_0^x=1000+1000e^{0.01x}-1000\)`],
+      final: R`(a) ≈ €1,613.11. (b) \(C(x)=1000e^{0.01x}\)`, num: 1613.11, numLabel: 'ΔC ≈' },
+    { id: 'p25c', src: 'Practice 2.5, P5', q: R`Find the area of the region bounded by \(y=e^x\), \(y=0\), \(y=3\), \(x=0\) and \(x=2\).`,
+      steps: [R`\(e^x\) reaches 3 at \(x=\ln 3\approx 1.10\). After that the cap \(y=3\) is the top edge.`, R`Area \(=\displaystyle\int_0^{\ln 3}e^x\,dx+\int_{\ln 3}^{2}3\,dx\)`, R`\(=(3-1)+(6-3\ln 3)\)`],
+      final: R`\(8-3\ln 3\approx 4.70\)`, num: 4.704, numLabel: 'area ≈' },
+    { id: 'p25d', src: 'Practice 2.5, P6', q: R`Compute \(\displaystyle\int_{-2}^{3}\lfloor |x|\rfloor\,dx\).`,
+      steps: [R`Sketch it as steps. On \([-2,-1)\) the height is 1, on \((-1,1)\) it's 0, on \([1,2)\) it's 1, and on \([2,3)\) it's 2.`, R`Add the rectangles: \(1\cdot 1+0+1\cdot 1+1\cdot 2\)`],
+      final: R`\(4\)`, num: 4, numLabel: 'integral =' },
+    { id: 'p25e', src: 'Practice 2.5, P8', q: R`\(f(x)=\dfrac{x+1}{p}\) on \((-1,1)\), \(\dfrac{3-x}{4}\) on \([1,3]\), and 0 elsewhere. Find \(p\gt 0\) so that \(f\) is a density. Then find the average value on \([-1,3]\).`,
+      steps: [R`\(\displaystyle\int_{-1}^{1}\dfrac{x+1}{p}dx=\dfrac{1}{p}\Big[\tfrac{x^2}{2}+x\Big]_{-1}^{1}=\dfrac{2}{p}\)`, R`\(\displaystyle\int_{1}^{3}\dfrac{3-x}{4}dx=\dfrac{1}{2}\) (a triangle with base 2 and height \(\tfrac12\))`, R`\(\dfrac{2}{p}+\dfrac{1}{2}=1\Rightarrow p=4\)`, R`Average \(=\dfrac{1}{3-(-1)}\cdot 1\)`],
+      final: R`\(p=4\), \(f_{\text{avg}}=\dfrac{1}{4}\)`, num: 4, numLabel: 'p =' },
+    { id: 'p25f', src: 'Practice 2.5, P7', q: R`If \(f=F'\) and \(g=3F'-x\), find all \(H(x)=\displaystyle\int\big(6f(x)-2g(x)\big)dx\).`,
+      steps: [R`\(6F'-2(3F'-x)=6F'-6F'+2x=2x\)`],
+      final: R`\(H(x)=x^2+C,\ C\in\mathbb{R}\)` },
+    { id: 'p25g', src: 'Own drill', q: R`Find \(\displaystyle\int\left(4x^3-\dfrac{2}{x}+e^{2x}\right)dx\).`,
+      steps: [R`Integrate term by term: \(\displaystyle\int 4x^3=x^4\)`, R`\(\displaystyle\int\dfrac{2}{x}=2\ln|x|\)`, R`\(\displaystyle\int e^{2x}=\dfrac{e^{2x}}{2}\)`],
+      final: R`\(x^4-2\ln|x|+\dfrac{e^{2x}}{2}+C\)` }
+  ],
+  traps: [
+    R`<b>No \(+C\).</b> Every indefinite integral needs \(+C\). If you're given a value like \(C(100)=400\), use it to find \(C\).`,
+    R`<b>\(\int\dfrac1x\) by the power rule.</b> \(n=-1\) is the exception: the answer is \(\ln|x|\).`,
+    R`<b>Forgetting to divide by k.</b> \(\displaystyle\int e^{0.01x}dx=100\,e^{0.01x}\), not \(e^{0.01x}\).`,
+    R`<b>Area vs integral.</b> A region below the x-axis gives a negative integral. For geometric area, take absolute values.`,
+    R`<b>Wrong order in Barrow.</b> It's \(F(\text{top})-F(\text{bottom})\).`
+  ]
+}
+];
+
+const QUIZ = [
+  { t: '2.1', q: R`Domain of \(\sqrt{x-1}\)?`, c: [R`\([1,+\infty)\)`, R`\((1,+\infty)\)`, R`\(\mathbb{R}\)`, R`\((-\infty,1]\)`], a: 0, e: R`Need \(x-1\ge 0\). The endpoint is included because \(\sqrt0=0\) exists.` },
+  { t: '2.1', q: R`Domain of \(\ln(x+2)\)?`, c: [R`\((-2,+\infty)\)`, R`\([-2,+\infty)\)`, R`\((2,+\infty)\)`, R`\(\mathbb{R}\)`], a: 0, e: R`Need \(x+2\gt 0\), strictly, because \(\ln 0\) does not exist.` },
+  { t: '2.1', q: R`\(\displaystyle\lim_{x\to 0}\dfrac{1}{x^2}\) = ?`, c: [R`\(+\infty\)`, R`does not exist`, R`\(0\)`, R`\(-\infty\)`], a: 0, e: R`Both sides go to \(+\infty\), so the limit is \(+\infty\). \(x=0\) is a vertical asymptote.` },
+  { t: '2.1', q: R`\(f(x)=x^2\) if \(x\le 2\), \(f(x)=x\) if \(x\gt 2\). What happens at \(x=2\)?`, c: ['Jump discontinuity', 'Removable discontinuity', 'Infinite discontinuity', 'Continuous'], a: 0, e: R`Left \(\to 4\), right \(\to 2\). Both are finite and different, so it's a jump.` },
+  { t: '2.1', q: R`\(f(x)=x^2\) for \(x\neq 2\) and \(f(2)=1\). What happens at \(x=2\)?`, c: ['Removable discontinuity', 'Jump discontinuity', 'Infinite discontinuity', 'Continuous'], a: 0, e: R`The limit is 4 and exists, but \(f(2)=1\neq 4\). Redefining one point would fix it.` },
+  { t: '2.1', q: R`\(\displaystyle\lim_{x\to+\infty}\dfrac{5}{3-x}\) = ?`, c: [R`\(0\)`, R`\(-\infty\)`, R`\(5\)`, R`\(-5\)`], a: 0, e: R`A constant over \(\pm\infty\) gives 0, so \(y=0\) is a horizontal asymptote.` },
+  { t: '2.1', q: R`\(\displaystyle\lim_{x\to 0^+}\ln x\) = ?`, c: [R`\(-\infty\)`, R`\(0\)`, R`\(+\infty\)`, R`\(1\)`], a: 0, e: R`The log plunges to \(-\infty\) as \(x\) approaches 0 from the right.` },
+  { t: '2.1', q: R`For \(f=x^2,\ g=x-1\), what is \((g\circ f)(x)\)?`, c: [R`\(x^2-1\)`, R`\((x-1)^2\)`, R`\(x^2(x-1)\)`, R`\(x-1\)`], a: 0, e: R`\(g(f(x))=f(x)-1=x^2-1\). The inside function is \(f\).` },
+  { t: '2.2', q: R`\(\big(e^{3x^2}\big)'\) = ?`, c: [R`\(6x\,e^{3x^2}\)`, R`\(e^{3x^2}\)`, R`\(3x^2e^{3x^2-1}\)`, R`\(6x\,e^{6x}\)`], a: 0, e: R`Chain rule: \(e^{u}\cdot u'\) with \(u'=6x\).` },
+  { t: '2.2', q: R`\(\big(\ln(x^2+1)\big)'\) = ?`, c: [R`\(\dfrac{2x}{x^2+1}\)`, R`\(\dfrac{1}{x^2+1}\)`, R`\(2x\ln(x^2+1)\)`, R`\(\dfrac{1}{2x}\)`], a: 0, e: R`\((\ln u)'=\dfrac{u'}{u}\).` },
+  { t: '2.2', q: R`\((\sqrt{x})'\) = ?`, c: [R`\(\dfrac{1}{2\sqrt{x}}\)`, R`\(2\sqrt{x}\)`, R`\(\dfrac{1}{\sqrt{x}}\)`, R`\(\dfrac{\sqrt{x}}{2}\)`], a: 0, e: R`\(x^{1/2}\to\dfrac12x^{-1/2}\).` },
+  { t: '2.2', q: R`\(C(q)\) is in € and \(q\) in units. What are the units of \(C'(q)\)?`, c: ['€ per unit', '€', 'units per €', '€ · units'], a: 0, e: 'Units of the function divided by units of the variable.' },
+  { t: '2.2', q: R`What is true about \(f(x)=|x|\) at \(x=0\)?`, c: ['Continuous but not differentiable', 'Differentiable but not continuous', 'Neither', 'Both'], a: 0, e: 'It has a corner, so there is no unique tangent. Differentiable ⇒ continuous, but not the other way round.' },
+  { t: '2.2', q: R`The tangent line to \(f\) at \(x=a\) is…`, c: [R`\(f(a)+f'(a)(x-a)\)`, R`\(f'(a)+f(a)(x-a)\)`, R`\(f(a)\,(x-a)\)`, R`\(f'(a)\,x\)`], a: 0, e: 'Point (a, f(a)) and slope f′(a).' },
+  { t: '2.2', q: R`The top of the quotient rule is…`, c: [R`\(f'g-fg'\)`, R`\(fg'-f'g\)`, R`\(f'g+fg'\)`, R`\(f'g'\)`], a: 0, e: R`\(\left(\dfrac fg\right)'=\dfrac{f'g-fg'}{g^2}\).` },
+  { t: '2.3', q: R`\(f'(a)=0\) and \(f''(a)\gt 0\). Then \(a\) is…`, c: ['a local minimum', 'a local maximum', 'an inflection point', 'nothing can be said'], a: 0, e: 'Positive second derivative means a cup shape, so it is a minimum.' },
+  { t: '2.3', q: R`A continuous profit function on \([a,b]\). Where can the global max be?`, c: ['At a stationary point, a kink, or an endpoint', 'Only where f′ = 0', 'Only at an endpoint', 'Only where f″ = 0'], a: 0, e: 'Compare every candidate. Endpoints and kinks count too.' },
+  { t: '2.3', q: R`\(f''(a)=0\). What can you conclude?`, c: ['Nothing yet: check whether f″ changes sign', 'It is always an inflection point', 'It is a maximum', 'It is a minimum'], a: 0, e: R`It's an inflection only if the concavity changes. \(x^4\) has \(f''(0)=0\) but a minimum there.` },
+  { t: '2.3', q: R`\(\pi(q)=100q-q^2\). Optimal \(q\)?`, c: ['50', '100', '25', '2500'], a: 0, e: R`\(100-2q=0\Rightarrow q=50\).` },
+  { t: '2.3', q: R`\(f'\) changes sign from \(+\) to \(-\) at \(x=c\). Then \(c\) is…`, c: ['a local maximum', 'a local minimum', 'an inflection point', 'a discontinuity'], a: 0, e: 'The function goes up then down, so it is a peak.' },
+  { t: '2.4', q: R`In \(P_n\), the coefficient of \((x-a)^3\) is…`, c: [R`\(\dfrac{f'''(a)}{6}\)`, R`\(f'''(a)\)`, R`\(\dfrac{f'''(a)}{3}\)`, R`\(3f'''(a)\)`], a: 0, e: R`Divide by \(3!=6\).` },
+  { t: '2.4', q: R`\(P_1(x)\) is…`, c: ['the tangent line', 'the value f(a)', 'the quadratic approximation', 'the derivative'], a: 0, e: R`\(P_1=f(a)+f'(a)(x-a)\).` },
+  { t: '2.4', q: R`\(P_4=2+(x-1)+3(x-1)^2\). Near \(x=1\), \(f\) is…`, c: ['above its tangent (concave up)', 'below its tangent (concave down)', 'crossing its tangent (inflection)', 'equal to its tangent'], a: 0, e: R`\(P_4-P_1=3(x-1)^2\ge 0\): even power, positive coefficient.` },
+  { t: '2.4', q: R`\(P_3=1+2(x-3)-(x-3)^3\). Near \(x=3\), \(f\) is…`, c: ['above the tangent on the left, below on the right', 'below on the left, above on the right', 'above on both sides', 'below on both sides'], a: 0, e: R`\(-(x-3)^3\) is positive for \(x\lt 3\) and negative for \(x\gt 3\). It's an inflection point.` },
+  { t: '2.4', q: R`The coefficient of \((x-1)^5\) in \(P_5\) is \(\dfrac{1}{30}\). What is \(f^{(5)}(1)\)?`, c: ['4', R`\(\dfrac{1}{30}\)`, '30', '120'], a: 0, e: R`\(5!\cdot\dfrac1{30}=\dfrac{120}{30}=4\).` },
+  { t: '2.4', q: R`\(e^x\approx\) ? (order 2, around 0)`, c: [R`\(1+x+\dfrac{x^2}{2}\)`, R`\(1+x+x^2\)`, R`\(x+\dfrac{x^2}{2}\)`, R`\(1+2x+x^2\)`], a: 0, e: R`All derivatives of \(e^x\) at 0 equal 1. Then divide by \(k!\).` },
+  { t: '2.5', q: R`\(\displaystyle\int x^3\,dx\) = ?`, c: [R`\(\dfrac{x^4}{4}+C\)`, R`\(3x^2+C\)`, R`\(x^4+C\)`, R`\(\dfrac{x^3}{3}+C\)`], a: 0, e: 'Raise the power by one, then divide by the new power.' },
+  { t: '2.5', q: R`\(\displaystyle\int\dfrac{1}{x}\,dx\) = ?`, c: [R`\(\ln|x|+C\)`, R`\(\dfrac{x^0}{0}+C\)`, R`\(-\dfrac{1}{x^2}+C\)`, R`\(e^x+C\)`], a: 0, e: R`The power rule fails for \(n=-1\). This one is the log.` },
+  { t: '2.5', q: R`\(\displaystyle\int e^{2x}\,dx\) = ?`, c: [R`\(\dfrac{e^{2x}}{2}+C\)`, R`\(2e^{2x}+C\)`, R`\(e^{2x}+C\)`, R`\(\dfrac{e^{2x+1}}{2x+1}+C\)`], a: 0, e: R`Divide by the inner constant \(k=2\).` },
+  { t: '2.5', q: R`\(\displaystyle\int_0^1 2x\,dx\) = ?`, c: ['1', '2', R`\(x^2\)`, '0'], a: 0, e: R`\(\Big[x^2\Big]_0^1=1-0\).` },
+  { t: '2.5', q: R`\(\displaystyle\int_a^b C'(x)\,dx\) represents…`, c: ['the increase in total cost from a to b', 'the marginal cost at b', 'the average cost', 'the fixed cost'], a: 0, e: 'Integrating a rate gives the total change.' },
+  { t: '2.5', q: R`\(f\) lies entirely below the x-axis on \([a,b]\). Then \(\displaystyle\int_a^b f\) is…`, c: ['negative', 'positive', 'zero', 'undefined'], a: 0, e: 'Integrals measure signed area.' },
+  { t: '2.5', q: R`The average value of \(f\) on \([a,b]\) is…`, c: [R`\(\dfrac{1}{b-a}\displaystyle\int_a^b f\)`, R`\(\displaystyle\int_a^b f\)`, R`\(\dfrac{f(a)+f(b)}{2}\)`, R`\(\dfrac{f(b)-f(a)}{b-a}\)`], a: 0, e: R`The last option is the average rate of change, which belongs to topic 2.2.` }
+];
+
+/* ---------------- STATE ---------------- */
+const KEY = 'calc-u2-v1';
+let state = { ratings: {}, quizMiss: {} };
+try { const s = JSON.parse(localStorage.getItem(KEY) || 'null'); if (s) state = Object.assign(state, s); } catch (e) {}
+function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+
+/* ---------------- HELPERS ---------------- */
+const $ = (s, el = document) => el.querySelector(s);
+const h = (tag, attrs = {}, html = '') => { const el = document.createElement(tag); for (const k in attrs) { if (k === 'class') el.className = attrs[k]; else el.setAttribute(k, attrs[k]); } if (html) el.innerHTML = html; return el; };
+function typeset(el) {
+  if (window.MathJax && MathJax.typesetPromise) {
+    MathJax.startup.promise.then(() => MathJax.typesetPromise([el])).catch(() => {});
+  }
+}
+function shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function topicPct(t) { const n = t.problems.length; const g = t.problems.filter(p => state.ratings[p.id] === 'got').length; return Math.round(100 * g / n); }
+
+/* countdown */
+(function () {
+  const exam = new Date('2026-10-28T09:00:00+01:00');
+  const now = new Date();
+  const days = Math.ceil((exam - now) / 86400000);
+  const txt = days > 1 ? `<span>Test on <b>Wed 28 Oct</b></span><span><b>${days}</b> days left</span>` : days === 1 ? `<span>Test is <b>tomorrow</b></span>` : `<span>Test day: <b>Wed 28 Oct</b></span>`;
+  $('#countdown').innerHTML = txt + '<span>Topics 2.1 – 2.5</span>';
+})();
+
+/* ---------------- VIEWS ---------------- */
+const VIEWS = [{ id: 'plan', label: 'How to study' }, ...TOPICS.map(t => ({ id: t.id, label: t.code, topic: t })), { id: 'quiz', label: 'Mixed quiz' }, { id: 'review', label: 'Review' }];
+let current = 'plan';
+
+function renderTabs() {
+  const tabs = $('#tabs'); tabs.innerHTML = '';
+  VIEWS.forEach(v => {
+    const b = h('button', { role: 'tab', 'aria-selected': String(v.id === current), 'data-id': v.id });
+    b.innerHTML = v.topic ? `${v.label}<span class="pct">${topicPct(v.topic)}%</span>` : v.label;
+    if (v.id === 'review') { const n = reviewItems().length; if (n) b.innerHTML += `<span class="pct">${n}</span>`; }
+    b.onclick = () => go(v.id);
+    tabs.appendChild(b);
+  });
+}
+function go(id) { current = id; try { history.replaceState(null, '', '#' + id); } catch (e) {} render(); window.scrollTo({ top: 0 }); }
+
+function render() {
+  renderTabs();
+  const main = $('#main'); main.innerHTML = '';
+  const v = VIEWS.find(x => x.id === current) || VIEWS[0];
+  let view;
+  if (v.id === 'plan') view = planView();
+  else if (v.id === 'quiz') view = quizView();
+  else if (v.id === 'review') view = reviewView();
+  else view = topicView(v.topic);
+  main.appendChild(view);
+  typeset(main);
+}
+
+function planView() {
+  const s = h('section', { class: 'view' });
+  s.innerHTML = `
+  <div class="block">
+    <span class="steplabel">The method</span>
+    <h2>Maths is learned with a pen, not by reading</h2>
+    <p class="lede">Re-reading slides feels productive but barely sticks. These six habits come from learning research, and this site is built around them. Keep paper next to you the whole time.</p>
+  </div>
+  <div class="method">
+    <div><h3>1 · Recall before you look</h3><p>The formula cards start covered. Say or write the answer first, then tap to check. Pulling a formula out of memory is what makes it stick.</p></div>
+    <div><h3>2 · Worked example, one step at a time</h3><p>Before each "Next step", predict it on paper. Then compare. You're learning the moves, not the final number.</p></div>
+    <div><h3>3 · Solve it yourself</h3><p>Do each practice problem fully on paper. Use one hint only if you're stuck for more than 3 minutes. Type the number into the checker.</p></div>
+    <div><h3>4 · Rate yourself honestly</h3><p>Got it, Shaky or Missed. Shaky and Missed problems go into the Review tab so you redo them tomorrow. Spacing them out beats cramming.</p></div>
+    <div><h3>5 · Mix the topics</h3><p>The exam won't tell you which rule to use. The mixed quiz shuffles all five topics so you practise choosing the method.</p></div>
+    <div><h3>6 · Write down why you got it wrong</h3><p>For every miss, write one line: "forgot to divide by 3!" or "skipped the endpoints". Re-read that list on Tuesday night.</p></div>
+  </div>
+  <div class="block">
+    <span class="steplabel">Your plan until Wednesday</span>
+    <h2>Two study days, five topics</h2>
+    <div class="plan">
+      <div><div class="day">Sun evening<small>30 min</small></div><ul><li>2.1: formula cards (recall first, then tap)</li><li>2.1: the worked example, step by step</li><li>2.1: practice problems 1 to 3, then rate each one</li></ul></div>
+      <div><div class="day">Monday<small>≈ 3 h</small></div><ul><li>Review tab first (10 min)</li><li>Finish the 2.1 practice problems</li><li>2.2 in full: cards, worked example, problems</li><li>2.3 in full</li><li>One mixed quiz to finish</li></ul></div>
+      <div><div class="day">Tuesday<small>≈ 3.5 h</small></div><ul><li>Review tab first</li><li>2.4 and 2.5 in full</li><li>Mock exam: 60 min, timed, no notes. Use 4 or 5 Team Problems you haven't done, then mark them with the solutions.</li><li>Redo whatever the mock exposed</li><li>Last 15 min: blank page, write every formula you remember, check against the cards, read your mistakes list and the traps</li><li>Sleep 8 hours</li></ul></div>
+      <div><div class="day">Wednesday<small>test day</small></div><ul><li>No studying needed. Everything was done on Tuesday.</li></ul></div>
+    </div>
+  </div>
+  <div class="block">
+    <span class="steplabel">In the exam</span>
+    <ul class="traps">
+      <li>Write the formula you're using before you plug numbers in. It earns method marks even if the arithmetic slips.</li>
+      <li>Finish with a sentence in context, with units: "Produce 9,500 units, for a profit of …".</li>
+      <li>Stuck? Move on and come back. Easy marks are spread across all the topics.</li>
+    </ul>
+  </div>
+  <div class="row"><button class="btn primary" id="startBtn">Start with 2.1</button><button class="btn" id="quizBtn">Take a mixed quiz</button></div>`;
+  setTimeout(() => { $('#startBtn').onclick = () => go('t21'); $('#quizBtn').onclick = () => go('quiz'); });
+  return s;
+}
+
+function topicView(t) {
+  const s = h('section', { class: 'view' });
+  s.appendChild(h('div', { class: 'block' }, `<span class="steplabel">Topic ${t.code}</span><h2>${t.name}</h2><p class="lede"><b>What gets tested:</b> ${t.exam}</p>`));
+
+  // recall cards
+  const cb = h('div', { class: 'block' }, `<span class="steplabel">Step 1 · Recall first</span><h3>Answer each card in your head before you tap it</h3>`);
+  const grid = h('div', { class: 'cards' });
+  t.cards.forEach(c => {
+    const card = h('button', { class: 'card', type: 'button' }, `<span class="q">${c.q}</span><span class="tap">tap to check</span><div class="a">${c.a}</div>`);
+    card.onclick = () => card.classList.toggle('open');
+    grid.appendChild(card);
+  });
+  cb.appendChild(grid);
+  const rowc = h('div', { class: 'row' });
+  const openAll = h('button', { class: 'btn', type: 'button' }, 'Uncover all');
+  openAll.onclick = () => { const all = grid.querySelectorAll('.card'); const anyClosed = [...all].some(x => !x.classList.contains('open')); all.forEach(x => x.classList.toggle('open', anyClosed)); openAll.textContent = anyClosed ? 'Cover all' : 'Uncover all'; };
+  rowc.appendChild(openAll); cb.appendChild(rowc);
+  s.appendChild(cb);
+
+  // worked example
+  const w = t.worked;
+  const wb = h('div', { class: 'block' }, `<span class="steplabel">Step 2 · Worked example</span><h3>${w.title}</h3>`);
+  const wcard = h('div', { class: 'prob' });
+  wcard.innerHTML = `<div class="head"><span class="src">${w.src}</span></div><div class="qtext">${w.q}</div>`;
+  const ol = h('ol', { class: 'steps' }); wcard.appendChild(ol);
+  const fin = h('div', { class: 'final' }, `<b>Result:</b> ${w.final}`); fin.hidden = true;
+  const wrow = h('div', { class: 'row' });
+  const nb = h('button', { class: 'btn primary', type: 'button' }, 'Predict, then show step 1');
+  let k = 0;
+  nb.onclick = () => {
+    if (k < w.steps.length) { const li = h('li', {}, w.steps[k]); ol.appendChild(li); typeset(li); k++; }
+    if (k >= w.steps.length) { fin.hidden = false; typeset(fin); nb.hidden = true; }
+    else nb.textContent = `Predict, then show step ${k + 1}`;
+  };
+  wrow.appendChild(nb); wcard.appendChild(fin); wcard.appendChild(wrow);
+  wb.appendChild(wcard); s.appendChild(wb);
+
+  // problems
+  const pb = h('div', { class: 'block' }, `<span class="steplabel">Step 3 · Your turn, on paper</span><h3>Practice problems</h3><p class="lede">Solve each one fully before opening anything. Hints come one at a time.</p>`);
+  t.problems.forEach((p, i) => pb.appendChild(problemCard(p, i + 1)));
+  s.appendChild(pb);
+
+  // traps
+  const tb = h('div', { class: 'block' }, `<span class="steplabel">Before you move on</span><h3>Common traps in ${t.code}</h3>`);
+  const ul = h('ul', { class: 'traps' }); t.traps.forEach(x => ul.appendChild(h('li', {}, x))); tb.appendChild(ul);
+  s.appendChild(tb);
+
+  const idx = TOPICS.indexOf(t);
+  const nav = h('div', { class: 'row' });
+  if (idx < TOPICS.length - 1) { const nx = h('button', { class: 'btn primary', type: 'button' }, `Next: ${TOPICS[idx + 1].code} ${TOPICS[idx + 1].name}`); nx.onclick = () => go(TOPICS[idx + 1].id); nav.appendChild(nx); }
+  const qz = h('button', { class: 'btn', type: 'button' }, 'Mixed quiz'); qz.onclick = () => go('quiz'); nav.appendChild(qz);
+  s.appendChild(nav);
+  return s;
+}
+
+function problemCard(p, n) {
+  const c = h('div', { class: 'prob', 'data-r': state.ratings[p.id] || '' });
+  c.innerHTML = `<div class="head"><h3>Problem ${n}</h3><span class="src">${p.src}</span></div><div class="qtext">${p.q}</div>`;
+  const ol = h('ol', { class: 'steps' }); c.appendChild(ol);
+  const fin = h('div', { class: 'final' }, `<b>Answer:</b> ${p.final}`); fin.hidden = true;
+
+  if (typeof p.num === 'number') {
+    const ck = h('div', { class: 'check' });
+    const inId = 'in-' + p.id;
+    ck.innerHTML = `<label for="${inId}">${p.numLabel}</label><input id="${inId}" inputmode="decimal" autocomplete="off" placeholder="your answer"><button class="btn" type="button">Check</button><span class="fb" aria-live="polite"></span>`;
+    const inp = $('input', ck), fb = $('.fb', ck);
+    const doCheck = () => {
+      const v = parseFloat(inp.value.replace(',', '.').replace(/[^0-9.\-eE]/g, ''));
+      if (isNaN(v)) { fb.className = 'fb no'; fb.textContent = 'Type a number first.'; return; }
+      const ok = Math.abs(v - p.num) <= Math.max(0.011, Math.abs(p.num) * 0.01);
+      fb.className = 'fb ' + (ok ? 'ok' : 'no');
+      fb.textContent = ok ? 'Correct. Now check your method against the solution.' : 'Not quite. Look for the slip, or open a hint.';
+    };
+    $('button', ck).onclick = doCheck;
+    inp.addEventListener('keydown', e => { if (e.key === 'Enter') doCheck(); });
+    c.appendChild(ck);
+  }
+
+  const row = h('div', { class: 'row' });
+  const hint = h('button', { class: 'btn', type: 'button' }, 'Hint');
+  const sol = h('button', { class: 'btn', type: 'button' }, 'Show full solution');
+  let k = 0;
+  hint.onclick = () => {
+    if (k < p.steps.length) { const li = h('li', {}, p.steps[k]); ol.appendChild(li); typeset(li); k++; }
+    hint.textContent = k < p.steps.length ? `Next hint (${k}/${p.steps.length})` : 'All hints shown';
+    if (k >= p.steps.length) hint.disabled = true;
+  };
+  sol.onclick = () => {
+    while (k < p.steps.length) { ol.appendChild(h('li', {}, p.steps[k])); k++; }
+    hint.disabled = true; hint.textContent = 'All hints shown';
+    fin.hidden = false; sol.hidden = true; typeset(c);
+  };
+  row.append(hint, sol);
+  c.appendChild(row); c.appendChild(fin);
+
+  const rate = h('div', { class: 'rate' }, '<span>How did it go?</span>');
+  [['got', 'Got it'], ['shaky', 'Shaky'], ['missed', 'Missed']].forEach(([v, l]) => {
+    const b = h('button', { type: 'button', 'data-v': v, 'aria-pressed': String(state.ratings[p.id] === v) }, l);
+    b.onclick = () => {
+      state.ratings[p.id] = v; save();
+      c.dataset.r = v;
+      rate.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.v === v)));
+      renderTabs();
+    };
+    rate.appendChild(b);
+  });
+  c.appendChild(rate);
+  return c;
+}
+
+/* quiz */
+let quiz = null;
+function newQuiz(n = 10, pool = QUIZ) { quiz = { items: shuffle(pool).slice(0, Math.min(n, pool.length)), i: 0, score: 0, answered: false, misses: [] }; }
+function quizView() {
+  const s = h('section', { class: 'view' });
+  s.appendChild(h('div', { class: 'block' }, `<span class="steplabel">Interleaved practice</span><h2>Mixed quiz</h2><p class="lede">Ten questions drawn from all five topics, in random order. Work it out on paper before you click. Questions you miss go to the Review tab.</p>`));
+  if (!quiz) newQuiz();
+  const box = h('div', { class: 'quizbox' });
+  s.appendChild(box);
+  drawQuiz(box);
+  return s;
+}
+function drawQuiz(box) {
+  box.innerHTML = '';
+  if (quiz.i >= quiz.items.length) {
+    const pct = Math.round(100 * quiz.score / quiz.items.length);
+    box.innerHTML = `<span class="steplabel">Result</span><div class="score">${quiz.score} / ${quiz.items.length}</div>
+      <p>${pct >= 90 ? 'Exam-ready on these. Do another round to check it wasn’t luck.' : pct >= 70 ? 'Solid. Redo the misses in the Review tab, then take another quiz.' : 'Go back to the topics where you missed questions and redo their practice problems.'}</p>`;
+    if (quiz.misses.length) { const ul = h('ul', { class: 'traps' }); quiz.misses.forEach(m => ul.appendChild(h('li', {}, `<b>${m.t}</b> ${m.q}`))); box.appendChild(ul); }
+    const row = h('div', { class: 'row' });
+    const again = h('button', { class: 'btn primary', type: 'button' }, 'New quiz');
+    again.onclick = () => { newQuiz(); drawQuiz(box); };
+    const all = h('button', { class: 'btn', type: 'button' }, `Long quiz (all ${QUIZ.length})`);
+    all.onclick = () => { newQuiz(QUIZ.length); drawQuiz(box); };
+    row.append(again, all); box.appendChild(row);
+    typeset(box); return;
+  }
+  const item = quiz.items[quiz.i];
+  const qi = QUIZ.indexOf(item);
+  box.innerHTML = `<div class="qmeta"><span>Question ${quiz.i + 1} of ${quiz.items.length} · Topic ${item.t}</span><span>Score ${quiz.score}</span></div>
+    <div class="bar"><i style="width:${100 * quiz.i / quiz.items.length}%"></i></div><div class="qtext" style="font-size:17px;font-weight:600">${item.q}</div>`;
+  const ch = h('div', { class: 'choices' });
+  const order = shuffle(item.c.map((t, i) => i));
+  const ex = h('div', { class: 'explain' }); ex.hidden = true;
+  const next = h('button', { class: 'btn primary', type: 'button' }, quiz.i === quiz.items.length - 1 ? 'See result' : 'Next question'); next.hidden = true;
+  order.forEach(ci => {
+    const b = h('button', { type: 'button' }, item.c[ci]);
+    b.onclick = () => {
+      if (quiz.answered) return; quiz.answered = true;
+      const right = ci === item.a;
+      if (right) { quiz.score++; delete state.quizMiss[qi]; }
+      else { quiz.misses.push(item); state.quizMiss[qi] = true; }
+      save();
+      ch.querySelectorAll('button').forEach((x, j) => { x.disabled = true; if (order[j] === item.a) x.classList.add('right'); });
+      if (!right) b.classList.add('wrong');
+      ex.innerHTML = `<b>${right ? 'Correct.' : 'Not this one.'}</b> ${item.e}`; ex.hidden = false; next.hidden = false;
+      typeset(ex); next.focus(); renderTabs();
+    };
+    ch.appendChild(b);
+  });
+  next.onclick = () => { quiz.i++; quiz.answered = false; drawQuiz(box); };
+  box.append(ch, ex, next);
+  typeset(box);
+}
+
+/* review */
+function reviewItems() {
+  const out = [];
+  TOPICS.forEach(t => t.problems.forEach((p, i) => { const r = state.ratings[p.id]; if (r === 'shaky' || r === 'missed') out.push({ kind: 'prob', t, p, r, n: i + 1 }); }));
+  Object.keys(state.quizMiss).forEach(k => { if (QUIZ[k]) out.push({ kind: 'quiz', q: QUIZ[k], qi: +k }); });
+  return out;
+}
+function reviewView() {
+  const s = h('section', { class: 'view' });
+  s.appendChild(h('div', { class: 'block' }, `<span class="steplabel">Spaced repetition</span><h2>Review</h2><p class="lede">Everything you rated Shaky or Missed, plus quiz questions you got wrong. Redo these at the start of each session, from a blank page. An item leaves the list once you rate it Got it or answer it correctly.</p>`));
+  const items = reviewItems();
+  if (!items.length) {
+    s.appendChild(h('div', { class: 'empty' }, 'Nothing to review yet. Work through a topic and rate each problem honestly. Anything Shaky or Missed shows up here.'));
+    return s;
+  }
+  const list = h('div', { class: 'block' });
+  items.filter(x => x.kind === 'prob').forEach(x => {
+    const it = h('div', { class: 'revitem' }, `<div class="t"><span class="pill ${x.r}">${x.r}</span> <b>${x.t.code} · Problem ${x.n}</b><br>${x.p.q}</div>`);
+    const b = h('button', { class: 'btn', type: 'button' }, 'Redo it'); b.onclick = () => go(x.t.id);
+    it.appendChild(b); list.appendChild(it);
+  });
+  const qm = items.filter(x => x.kind === 'quiz');
+  if (qm.length) {
+    list.appendChild(h('h3', {}, 'Missed quiz questions'));
+    qm.forEach(x => {
+      const it = h('div', { class: 'revitem' }, `<div class="t"><span class="pill missed">${x.q.t}</span> ${x.q.q}</div>`);
+      const b = h('button', { class: 'btn', type: 'button' }, 'Show answer');
+      b.onclick = () => { const d = h('div', { class: 'final' }, `<b>${x.q.c[x.q.a]}</b>. ${x.q.e}`); it.appendChild(d); typeset(d); b.remove(); };
+      it.appendChild(b); list.appendChild(it);
+    });
+    const rq = h('button', { class: 'btn primary', type: 'button' }, 'Quiz me on just these');
+    rq.onclick = () => { newQuiz(qm.length, qm.map(x => x.q)); go('quiz'); };
+    list.appendChild(h('div', { class: 'row' })).appendChild(rq);
+  }
+  s.appendChild(list);
+  const reset = h('button', { class: 'btn', type: 'button' }, 'Clear all ratings');
+  let armed = false;
+  reset.onclick = () => { if (!armed) { armed = true; reset.textContent = 'Click again to confirm'; return; } state = { ratings: {}, quizMiss: {} }; save(); render(); };
+  s.appendChild(h('div', { class: 'row' })).appendChild(reset);
+  return s;
+}
+
+/* boot */
+const hash = (location.hash || '').slice(1);
+if (VIEWS.some(v => v.id === hash)) current = hash;
+render();
+</script>
+
+</body>
+</html>
