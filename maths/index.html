@@ -166,6 +166,26 @@ button:focus-visible, input:focus-visible { outline: 3px solid var(--mark); outl
 .pill.shaky { background: var(--warn-soft); color: var(--warn); }
 table.mini { border-collapse: collapse; font-size: 14px; width: 100%; }
 table.mini td, table.mini th { border-bottom: 1px solid var(--line); padding: 4px 6px; text-align: left; }
+.vbox { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; }
+.vbox summary { cursor: pointer; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px; align-items: baseline; list-style: none; }
+.vbox summary::-webkit-details-marker { display: none; }
+.vbox summary::after { content: "Show ▾"; font-weight: 600; font-size: 14px; color: var(--pen); }
+.vbox[open] summary::after { content: "Hide ▴"; }
+.vbox[open] summary { margin-bottom: 12px; }
+.vcount { font-size: 14px; color: var(--ink-soft); flex: 1; }
+.vids { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 10px; }
+.vid { display: flex; flex-direction: column; text-decoration: none; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; min-width: 0; }
+.vid:hover { border-color: var(--pen); }
+.vid .thumb { position: relative; aspect-ratio: 16 / 9; max-width: 100%; background: linear-gradient(135deg, var(--pen-soft), #fff6c9); display: block; }
+.vid .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.vid .play { position: absolute; left: 10px; bottom: 10px; width: 34px; height: 34px; border-radius: 50%; background: var(--pop); color: #fff; display: grid; place-items: center; font-size: 13px; }
+.vid .vt { padding: 10px 12px; display: flex; flex-direction: column; gap: 2px; }
+.vid .vt b { font-size: 15px; line-height: 1.3; }
+.vid .vt small { font-size: 13px; color: var(--ink-soft); }
+.vid .vt small.what { color: var(--pen); font-weight: 600; }
+.lang { align-self: flex-start; font-family: var(--f-mono); font-size: 11px; text-transform: uppercase; letter-spacing: .06em; padding: 1px 7px; border-radius: 999px; margin-bottom: 4px; }
+.lang.de { background: #fff1d6; color: var(--warn); }
+.lang.en { background: var(--pen-soft); color: var(--pen); }
 mjx-container[display="true"] { overflow-x: auto; overflow-y: hidden; max-width: 100%; }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
@@ -509,6 +529,68 @@ const QUIZ = [
   { t: '2.5', q: R`The average value of \(f\) on \([a,b]\) is…`, c: [R`\(\dfrac{1}{b-a}\displaystyle\int_a^b f\)`, R`\(\displaystyle\int_a^b f\)`, R`\(\dfrac{f(a)+f(b)}{2}\)`, R`\(\dfrac{f(b)-f(a)}{b-a}\)`], a: 0, e: R`The last option is the average rate of change, which belongs to topic 2.2.` }
 ];
 
+/* ---------------- VIDEOS (channel and title checked) ---------------- */
+const VIDEOS = {
+  t21: [
+    ['LJo8kBy4DKE', 'de', 'Matheretter', 'Was ist ein Grenzwert? Einführung von Limes', 'What a limit is'],
+    ['GJsmOANPJlQ', 'de', 'MathePeter', 'Grenzwerte von Funktionen + wichtige Grenzwerte', 'Limits at a point and at ∞'],
+    ['_ke4E-zjI7k', 'de', 'MathemaTrick', 'Stetigkeit überprüfen bei abschnittsweise definierten Funktionen', 'Piecewise continuity, like the exam'],
+    ['g-4d-9XqIaY', 'de', 'LernKompass', 'Stetigkeit: linker / rechter Grenzwert, Parameter bestimmen', 'Find a so f is continuous'],
+    ['zLozwNf5r-8', 'en', 'The Organic Chemistry Tutor', 'Introduction to Limits', 'Limits from tables and graphs'],
+    ['joewRl1CTL8', 'en', 'The Organic Chemistry Tutor', 'Continuity: jump, infinite & removable discontinuities', 'The three discontinuity types'],
+    ['JrYmEo6hoiU', 'en', 'The Organic Chemistry Tutor', 'Piecewise Functions: Limits and Continuity', 'One-sided limits at a join']
+  ],
+  t22: [
+    ['LkoYk5ggQSY', 'de', 'Mathe by Daniel Jung', 'Ableitung mit Potenz-, Faktor-, Produkt-, Ketten- und Quotientenregel', 'All the rules in one video'],
+    ['30vkEz1BxIg', 'de', 'Mathe by Daniel Jung', 'Ableitung Kettenregel Beispiel', 'Chain rule, step by step'],
+    ['QeGtvcEKZbE', 'de', 'Mathe by Daniel Jung', 'Ableitung e-Funktion mit Produkt- und Kettenregel', 'Like the q(p) = 800e⁻⁰·⁰⁴ᵖ problem'],
+    ['-AyUqLeTtrE', 'de', 'Mathe by Daniel Jung', 'Tangentengleichung aufstellen mittels 1. Ableitung', 'Tangent line'],
+    ['fxz3Hdx4XpM', 'de', 'MathemaTrick', 'Gleichung einer Tangente bestimmen', 'Tangent line, slower'],
+    ['FLAm7Hqm-58', 'en', 'The Organic Chemistry Tutor', 'Derivatives for Beginners', 'Basic introduction'],
+    ['YG15m2VwSjA', 'en', '3Blue1Brown', 'Visualizing the chain rule and product rule', 'Why the rules work'],
+    ['8jVDEcQ0wXk', 'en', 'The Organic Chemistry Tutor', 'Quotient Rule for Derivatives', 'Quotient rule practice'],
+    ['C5RI5eLzVfo', 'en', 'The Organic Chemistry Tutor', 'Local Linearization', 'Linear approximation, like R(20.5)'],
+    ['fml0-ELYLaE', 'en', 'The Organic Chemistry Tutor', 'Continuity and Differentiability', 'Why |x| has no derivative at 0']
+  ],
+  t23: [
+    ['3ff653i3sds', 'de', 'Die Merkhilfe', 'Extrempunkte bestimmen: notwendige & hinreichende Bedingung', 'f′ = 0, then the f″ test'],
+    ['UnO0N6Lazx0', 'de', 'Koonys Schule', 'Extrempunkte und Wendepunkte berechnen', 'Max, min and inflection'],
+    ['y0WFUKJmYqQ', 'de', 'MatheMystik', 'Gewinnmaximum einer Gewinnfunktion berechnen', 'Profit maximization'],
+    ['Ym1jQrV6TrA', 'de', 'Irgendwas mit Mathe', 'Quadratische Gewinnfunktion untersuchen (Erlös, Kosten)', 'Full business problem'],
+    ['V239IIoGVT8', 'en', 'The Organic Chemistry Tutor', 'Relative Extrema & First Derivative Test', 'Sign table of f′'],
+    ['15awMHeP1Yc', 'en', 'The Organic Chemistry Tutor', 'Concavity, Inflection Points, First & Second Derivative', 'Concavity and f″'],
+    ['XEr-t6TWP18', 'en', 'James Hamblin', 'Calculus: Maximizing Profit', 'Profit example']
+  ],
+  t24: [
+    ['ELPvMyhNrz8', 'de', 'MathePeter', 'Taylorpolynom einfach erklärt + Beispiel', 'Best place to start'],
+    ['5xZNmo1qOIE', 'de', 'simpleclub', 'Taylor-Polynom: Was ist das?', 'Short idea video'],
+    ['o95cOqnLekw', 'de', 'MathemaTrick', 'Taylorpolynom 3. Grades mit Entwicklungspunkt', 'Around a ≠ 0, like ln x at 1'],
+    ['_Hff4BSpvTY', 'de', 'Loay', 'Taylorpolynom + Animation', 'See the approximation improve'],
+    ['3d6DsjIBzJ4', 'en', '3Blue1Brown', 'Taylor series (Essence of calculus, ch. 11)', 'The intuition, beautifully animated']
+  ],
+  t25: [
+    ['IeSdRNb8Gx0', 'de', 'MathemaTrick', 'Integral einfach erklärt: unbestimmte Integrale, Stammfunktion', 'Indefinite integrals, + C'],
+    ['TKB7-K6Dkj8', 'de', 'MathePeter', 'Integralrechnung: Stammfunktionen', 'Integration rules'],
+    ['Yww8hg0FzUo', 'de', 'MathePeter', 'Bestimmte Integrale + 2 Beispiele', 'F(b) − F(a)'],
+    ['lP1sALCSxQs', 'de', 'Mathe by Daniel Jung', 'Bestimmtes Integral: Flächenbilanz über/unter der x-Achse', 'Signed area'],
+    ['V8JHEDfJABM', 'de', 'Mathe by Daniel Jung', 'Fläche bestimmen mit Nullstelle im Intervall', 'Area when the curve crosses 0'],
+    ['XONmXtVVcr4', 'de', 'Mathe by Daniel Jung', 'Fläche zwischen Graphen', 'Area between curves'],
+    ['rfG8ce4nNh0', 'en', '3Blue1Brown', 'Integration and the fundamental theorem of calculus', 'Why integrals are areas'],
+    ['xaCPDMEkbig', 'en', 'The Organic Chemistry Tutor', 'Antiderivatives', 'Lots of worked examples'],
+    ['6WUjbJEeJwM', 'en', 'The Organic Chemistry Tutor', 'Calculus 1: Integration & Antiderivatives', 'Longer full review']
+  ]
+};
+function videoList(ids, filter) {
+  const wrap = h('div', { class: 'vids' });
+  ids.filter(v => !filter || filter === 'all' || v[1] === filter).forEach(([id, lang, ch, title, what]) => {
+    const a = h('a', { class: 'vid', href: 'https://www.youtube.com/watch?v=' + id, target: '_blank', rel: 'noopener' });
+    a.innerHTML = `<span class="thumb"><img src="https://i.ytimg.com/vi/${id}/mqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play">▶</span></span>
+      <span class="vt"><span class="lang ${lang}">${lang === 'de' ? 'Deutsch' : 'English'}</span><b>${title}</b><small>${ch}</small><small class="what">${what}</small></span>`;
+    wrap.appendChild(a);
+  });
+  return wrap;
+}
+
 /* ---------------- STATE ---------------- */
 const KEY = 'calc-u2-v1';
 let state = { ratings: {}, quizMiss: {} };
@@ -536,7 +618,7 @@ function topicPct(t) { const n = t.problems.length; const g = t.problems.filter(
 })();
 
 /* ---------------- VIEWS ---------------- */
-const VIEWS = [{ id: 'plan', label: 'How to study' }, ...TOPICS.map(t => ({ id: t.id, label: t.code, topic: t })), { id: 'quiz', label: 'Mixed quiz' }, { id: 'review', label: 'Review' }];
+const VIEWS = [{ id: 'plan', label: 'How to study' }, ...TOPICS.map(t => ({ id: t.id, label: t.code, topic: t })), { id: 'quiz', label: 'Mixed quiz' }, { id: 'review', label: 'Review' }, { id: 'videos', label: 'Videos' }];
 let current = 'plan';
 
 function renderTabs() {
@@ -559,6 +641,7 @@ function render() {
   if (v.id === 'plan') view = planView();
   else if (v.id === 'quiz') view = quizView();
   else if (v.id === 'review') view = reviewView();
+  else if (v.id === 'videos') view = videosView();
   else view = topicView(v.topic);
   main.appendChild(view);
   typeset(main);
@@ -606,6 +689,12 @@ function planView() {
 function topicView(t) {
   const s = h('section', { class: 'view' });
   s.appendChild(h('div', { class: 'block' }, `<span class="steplabel">Topic ${t.code}</span><h2>${t.name}</h2><p class="lede"><b>What gets tested:</b> ${t.exam}</p>`));
+  if (VIDEOS[t.id]) {
+    const vb = h('details', { class: 'block vbox' });
+    vb.innerHTML = `<summary><span class="steplabel">Lost on this topic? Watch first</span><span class="vcount">${VIDEOS[t.id].length} videos · German &amp; English</span></summary>`;
+    vb.appendChild(videoList(VIDEOS[t.id]));
+    s.appendChild(vb);
+  }
 
   // recall cards
   const cb = h('div', { class: 'block' }, `<span class="steplabel">Step 1 · Recall first</span><h3>Answer each card in your head before you tap it</h3>`);
@@ -807,6 +896,27 @@ function reviewView() {
   let armed = false;
   reset.onclick = () => { if (!armed) { armed = true; reset.textContent = 'Click again to confirm'; return; } state = { ratings: {}, quizMiss: {} }; save(); render(); };
   s.appendChild(h('div', { class: 'row' })).appendChild(reset);
+  return s;
+}
+
+let vidLang = 'all';
+function videosView() {
+  const s = h('section', { class: 'view' });
+  s.appendChild(h('div', { class: 'block' }, `<span class="steplabel">Watch, then practise</span><h2>Videos for every topic</h2><p class="lede">Watch one video for a topic, pause it before each example and try it yourself, then go straight to that topic's practice problems. Watching without trying feels like understanding but doesn't stick.</p>`));
+  const seg = h('div', { class: 'row' });
+  [['all', 'All'], ['de', 'Deutsch'], ['en', 'English']].forEach(([k, l]) => {
+    const b = h('button', { class: 'btn' + (vidLang === k ? ' primary' : ''), type: 'button' }, l);
+    b.onclick = () => { vidLang = k; render(); };
+    seg.appendChild(b);
+  });
+  s.appendChild(seg);
+  TOPICS.forEach(t => {
+    const blk = h('div', { class: 'block' }, `<span class="steplabel">Topic ${t.code}</span><h3>${t.name}</h3>`);
+    blk.appendChild(videoList(VIDEOS[t.id] || [], vidLang));
+    const go2 = h('button', { class: 'btn', type: 'button' }, `Practise ${t.code}`); go2.onclick = () => go(t.id);
+    blk.appendChild(h('div', { class: 'row' })).appendChild(go2);
+    s.appendChild(blk);
+  });
   return s;
 }
 
