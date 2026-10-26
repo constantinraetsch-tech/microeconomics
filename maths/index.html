@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Cache-Control" content="no-cache">
 <title>Calculus Unit 2 Trainer</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -196,6 +197,7 @@ mjx-container[display="true"] { overflow-x: auto; overflow-y: hidden; max-width:
   <div class="eyebrow">Applied Mathematics for Business · Unit 2 · One-variable calculus</div>
   <h1>Calculus Unit 2 <span class="hl">Trainer</span></h1>
   <div class="countdown" id="countdown"></div>
+  <div class="row" style="margin-top:12px"><button class="btn primary" type="button" onclick="go('videos')">▶ Videos in German &amp; English</button></div>
 </div></header>
 
 <nav class="tabs" aria-label="Sections"><div class="wrap" id="tabs" role="tablist"></div></nav>
@@ -618,7 +620,7 @@ function topicPct(t) { const n = t.problems.length; const g = t.problems.filter(
 })();
 
 /* ---------------- VIEWS ---------------- */
-const VIEWS = [{ id: 'plan', label: 'How to study' }, ...TOPICS.map(t => ({ id: t.id, label: t.code, topic: t })), { id: 'quiz', label: 'Mixed quiz' }, { id: 'review', label: 'Review' }, { id: 'videos', label: 'Videos' }];
+const VIEWS = [{ id: 'plan', label: 'How to study' }, { id: 'videos', label: '▶ Videos' }, ...TOPICS.map(t => ({ id: t.id, label: t.code, topic: t })), { id: 'quiz', label: 'Mixed quiz' }, { id: 'review', label: 'Review' }];
 let current = 'plan';
 
 function renderTabs() {
@@ -681,8 +683,8 @@ function planView() {
       <li>Stuck? Move on and come back. Easy marks are spread across all the topics.</li>
     </ul>
   </div>
-  <div class="row"><button class="btn primary" id="startBtn">Start with 2.1</button><button class="btn" id="quizBtn">Take a mixed quiz</button></div>`;
-  setTimeout(() => { $('#startBtn').onclick = () => go('t21'); $('#quizBtn').onclick = () => go('quiz'); });
+  <div class="row"><button class="btn primary" id="startBtn">Start with 2.1</button><button class="btn" id="vidBtn">▶ Watch the videos</button><button class="btn" id="quizBtn">Take a mixed quiz</button></div>`;
+  setTimeout(() => { $('#startBtn').onclick = () => go('t21'); $('#quizBtn').onclick = () => go('quiz'); $('#vidBtn').onclick = () => go('videos'); });
   return s;
 }
 
@@ -690,7 +692,7 @@ function topicView(t) {
   const s = h('section', { class: 'view' });
   s.appendChild(h('div', { class: 'block' }, `<span class="steplabel">Topic ${t.code}</span><h2>${t.name}</h2><p class="lede"><b>What gets tested:</b> ${t.exam}</p>`));
   if (VIDEOS[t.id]) {
-    const vb = h('details', { class: 'block vbox' });
+    const vb = h('details', { class: 'block vbox', open: '' });
     vb.innerHTML = `<summary><span class="steplabel">Lost on this topic? Watch first</span><span class="vcount">${VIDEOS[t.id].length} videos · German &amp; English</span></summary>`;
     vb.appendChild(videoList(VIDEOS[t.id]));
     s.appendChild(vb);
